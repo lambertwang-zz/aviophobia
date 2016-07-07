@@ -10,4 +10,6 @@
 Aviophobia
 Author: Lambert Wang
 
-A C++ game engine using SDL for the Linux and Windows platforms.
+A 2D C++ game engine using SDL for the Linux and Windows platforms.
+Loosely based on the Dragonfly engine by Mark Claypool (claypool@wpi.edu)
+Rather than using images for sprites, sprites are 3D vector graphics formed from polygons.
