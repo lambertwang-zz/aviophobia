@@ -13,7 +13,6 @@
 
 // aviophobia headers
 #include "Manager.h"
-#include "ObjectList.h"
 
 namespace av {
 

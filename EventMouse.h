@@ -14,7 +14,6 @@
 // Dragonfly headers
 #include "Event.h"
 #include "Input.h"
-#include "Position.h"
 
 namespace av {
 
@@ -29,22 +28,14 @@ const std::string MOUSE_EVENT = "av::mouse";
 
     class EventMouse : public Event {
     private:
-        // Mouse position
-        av::Position mouse_pos;
-    
         // Mouse button
         av::Input::MouseButton mouse_button;
         // Mouse action
         av::EventMouseAction mouse_action;
     public:
         // base constructor
-        EventMouse(av::Position pos, av::Input::MouseButton button, av::EventMouseAction action);
+        EventMouse(av::Input::MouseButton button, av::EventMouseAction action);
 
-        // Sets the mouse position in the event 
-        void setPos(av::Position new_pos);
-        // Get mouse position from the event
-        av::Position getPos() const;
-        
         // Sets the button in the event 
         void setButton(av::Input::MouseButton new_button);
         // Get button from the event

@@ -9,7 +9,7 @@
 #include "Manager.h"
 #include "Object.h"
 #include "Particle.h"
-#include "RBTree.h"
+#include "ObjectTree.h"
 
 namespace av {
     // WorldState
@@ -19,9 +19,9 @@ namespace av {
         // List of objects that need to be updated each step
         ObjectList objects;
 
-        RBTree<Object> objects;
+        ObjectTree<Object> objects;
 
-        RBTree<Particle> particles;
+        ObjectTree<Particle> particles;
 
         // The position that the world view is following
         // When set to NULL, the world will be centered on the origin
@@ -35,7 +35,7 @@ namespace av {
         WorldState &operator=(const WorldState &rhs);
 
         // Returns a list of all objects in the world
-        RBTree<Object> getAllObjects(void) const;
+        ObjectTree<Object> getAllObjects(void) const;
     };
 } // End of namespace
 

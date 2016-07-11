@@ -15,11 +15,11 @@
 #include <string>
 
 // aviophobia headers
-#include "HasId.h"
+#include "Object.h"
 
 namespace av {
 
-    class Sound: public HasId {
+    class Sound: public Object {
     private:
         // The unique label of the sound
         std::string label;

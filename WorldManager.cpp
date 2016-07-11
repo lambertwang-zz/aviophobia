@@ -2,7 +2,7 @@
  * World Manager class
  */
 
-// Dragonfly headers
+// aviophobia headers
 #include "EventBeforeDraw.h"
 #include "EventCollision.h"
 #include "EventJoystick.h"
@@ -11,7 +11,8 @@
 #include "EventStep.h"
 #include "GraphicsManager.h"
 #include "LogManager.h"
-#include "ObjectListIterator.h"
+#include "ObjectTree.h"
+#include "TreeIterator.h"
 #include "utility.h"
 #include "WorldManager.h"
 
@@ -30,8 +31,8 @@ int av::WorldManager::startUp() {
 
         // Set member variables and initialize lists
         this->setType("WORLD_MANAGER");
-        this->updates = av::ObjectList();
-        this->deletions = av::ObjectList();
+        this->updates = av::ObjectTree();
+        this->deletions = av::ObjectTree();
 
         av::GraphicsManager &graphics_manager = av::GraphicsManager::getInstance();
         this->p_view_following = NULL;
@@ -48,19 +49,19 @@ void av::WorldManager::shutDown() {
     if (this->isStarted()) {
         av::LogManager &log_manager = av::LogManager::getInstance();
         // Delete all game objects
-        av::ObjectList all_obj = this->updates;
+        av::ObjectTree all_obj = this->updates;
         
-        av::ObjectListIterator li(&all_obj);
+        av::TreeIterator ti(&all_obj);
 
         while (!this->updates.isEmpty()) {
 
-            li.first();
-            while(!li.isDone()) {
-                av::Object *p_o = li.currentObject();
+            ti.first();
+            while(!ti.isDone()) {
+                av::Object *p_o = ti.currentObject();
                 // log_manager.writeLog(0, "av::WorldManager::shutDown(): Deleting object of type");
                 log_manager.writeLog(0, "av::WorldManager::shutDown(): Deleting object of type %s", p_o->getType().c_str());
                 delete p_o;
-                li.next();
+                ti.next();
             }
         }
 
@@ -68,12 +69,6 @@ void av::WorldManager::shutDown() {
 
         av::Manager::shutDown();
     }
-}
-
-void av::WorldManager::setViewPosition(av::Position new_view_pos) {
-    av::GraphicsManager &graphics_manager = av::GraphicsManager::getInstance();
-
-    av::Position temp_pos = av::Position(new_view_pos.getX(), new_view_pos.getY());
 }
 
 int av::WorldManager::setViewFollowing(av::Object *p_new_view_following) {
@@ -101,23 +96,20 @@ int av::WorldManager::removeObject(Object *p_o) {
 }
 
 
-av::ObjectList av::WorldManager::getAllObjects(void) const {
+av::ObjectTree av::WorldManager::getAllObjects(void) const {
     return this->updates;
 }
 
 
 void av::WorldManager::update() {
     // Calculate movement
-    av::ObjectListIterator move_i(&this->updates);
+    av::TreeIterator move_i(&this->updates);
     for (move_i.first(); !move_i.isDone(); move_i.next()) {
         av::Object *p_o = move_i.currentObject();
         int x = p_o->getXVelocityStep();
         int y = p_o->getYVelocityStep();
 
         if (x != 0 || y != 0) {
-            av::Position last_pos = p_o->getPos();
-            av::Position new_pos(last_pos.getX()+x, last_pos.getY()+y);
-            this->moveObject(p_o, new_pos);
         }
     }
 
@@ -126,7 +118,7 @@ void av::WorldManager::update() {
         av::LogManager &log_manager = av::LogManager::getInstance();
         log_manager.writeLog(0, "av::WorldManager::update(): Removing %d objects from the world", this->deletions.getCount());
         
-        av::ObjectListIterator li(&this->deletions);
+        av::TreeIterator li(&this->deletions);
         for (li.first(); !li.isDone(); li.next()) {
             this->removeObject(li.currentObject());
             delete li.currentObject();
@@ -137,7 +129,7 @@ void av::WorldManager::update() {
 
 void av::WorldManager::draw() {
     // Iterate through the object list 5 times, once for each altitude layer
-    av::ObjectListIterator li(&this->updates);
+    av::TreeIterator li(&this->updates);
     for (int i = 0; i <= MAX_ALTITUDE; i++) {
         for (li.first(); !li.isDone(); li.next()) {
             av::Object *p_o = li.currentObject();
@@ -152,11 +144,11 @@ int av::WorldManager::markForDelete(av::Object *p_o) {
     return this->deletions.insert(p_o);
 }
 
-av::ObjectList av::WorldManager::isCollision(av::Object *p_o, av::Position where) {
+av::ObjectTree av::WorldManager::isCollision(av::Object *p_o) {
     // Create an objectlist for return
-    av::ObjectList collision_list;
+    av::ObjectTree collision_list;
 
-    av::ObjectListIterator li(&this->updates);
+    av::TreeIterator li(&this->updates);
 
     for (li.first(); !li.isDone(); li.next()) {
         av::Object *p_temp_o = li.currentObject();
@@ -168,32 +160,27 @@ av::ObjectList av::WorldManager::isCollision(av::Object *p_o, av::Position where
     return collision_list;
 }
 
-int av::WorldManager::moveObject(av::Object *p_o, av::Position where) {
-    av::Position previous = *(new av::Position(p_o->getPos().getX(), p_o->getPos().getY()));
-    // Set position to new position
-    // Will be reverted if movement is obstructed
-    p_o->setPos(where);
-
+int av::WorldManager::moveObject(av::Object *p_o) {
     // Calculate collisions
     if (p_o->causesCollisions()) {
-        av::ObjectList collidedObjects = this->isCollision(p_o, where);
+        av::ObjectTree collidedObjects = this->isCollision(p_o);
 
         if (!collidedObjects.isEmpty()) {
             bool can_move = true;
 
-            av::ObjectListIterator li(&collidedObjects);
+            av::TreeIterator li(&collidedObjects);
             for (li.first(); !li.isDone(); li.next()) {
                 av::Object *p_temp_o = li.currentObject();
 
                 // Create a collision event
-                av::EventCollision collision(p_o, p_temp_o, where);
+                // av::EventCollision collision(p_o, p_temp_o);
 
                 av::LogManager &log_manager = av::LogManager::getInstance();
                 log_manager.writeLog(1, "av::WorldManager::moveObject(): Sending collision event, object id %d collided with object id %d", 
                     p_o->getId(), p_temp_o->getId());
 
-                p_o->eventHandler(&collision);
-                p_temp_o->eventHandler(&collision);
+                // p_o->eventHandler(&collision);
+                // p_temp_o->eventHandler(&collision);
 
                 // If Both objects are hard and this object is not stopped by soft objects
                 // Then movement is obstructed
@@ -209,14 +196,12 @@ int av::WorldManager::moveObject(av::Object *p_o, av::Position where) {
             // If cannot move, return -1
             if (!can_move) {
                 // Rollback position
-                p_o->setPos(previous);
                 return -1;
             }
         } // No collision
     }
     // If world view following this object, move world view position
     if (this->p_view_following == p_o) {
-        setViewPosition(p_o->getPos());
     }
 
     return 0;

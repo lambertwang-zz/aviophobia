@@ -43,6 +43,12 @@
     <Filter Include="Source Files\audio">
       <UniqueIdentifier>{1c8d03ec-b939-4a4a-b14f-9ec56234d5eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\sprite">
+      <UniqueIdentifier>{9eebcf1a-c3f7-429b-87cf-c71db3910cee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\sprite">
+      <UniqueIdentifier>{f30fbd54-d227-4ecf-bd02-e344ebccf630}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicsManager.cpp">
@@ -99,29 +105,29 @@
     <ClCompile Include="Object.cpp">
       <Filter>Source Files\models</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectListIterator.cpp">
-      <Filter>Source Files\models</Filter>
-    </ClCompile>
-    <ClCompile Include="Position.cpp">
-      <Filter>Source Files\models</Filter>
-    </ClCompile>
-    <ClCompile Include="RBTree.cpp">
-      <Filter>Source Files\models</Filter>
-    </ClCompile>
     <ClCompile Include="Music.cpp">
       <Filter>Source Files\audio</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>Source Files\audio</Filter>
     </ClCompile>
-    <ClCompile Include="HasId.cpp">
-      <Filter>Source Files\models</Filter>
-    </ClCompile>
-    <ClCompile Include="RBNode.cpp">
-      <Filter>Source Files\models</Filter>
-    </ClCompile>
     <ClCompile Include="EventQuit.cpp">
       <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeIterator.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>Source Files\sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectTree.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectNode.cpp">
+      <Filter>Source Files\models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,12 +185,6 @@
     <ClInclude Include="WorldState.h">
       <Filter>Header Files\models</Filter>
     </ClInclude>
-    <ClInclude Include="Position.h">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
-    <ClInclude Include="RBTree.h">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Header Files\utility</Filter>
     </ClInclude>
@@ -194,16 +194,25 @@
     <ClInclude Include="Sound.h">
       <Filter>Header Files\audio</Filter>
     </ClInclude>
-    <ClInclude Include="HasId.h">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
-    <ClInclude Include="RBNode.h">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
     <ClInclude Include="EventQuit.h">
       <Filter>Header Files\events</Filter>
     </ClInclude>
     <ClInclude Include="TreeIterator.h">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>Header Files\sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Header Files\sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectNode.h">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectTree.h">
       <Filter>Header Files\models</Filter>
     </ClInclude>
   </ItemGroup>

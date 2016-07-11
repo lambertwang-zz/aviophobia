@@ -102,10 +102,6 @@ void av::nanoSleep(long nanoseconds) {
     #endif
 }
 
-bool av::positionsIntersect(av::Position p1, av::Position p2) {
-    return (p1.getX() == p2.getX()) && (p1.getY() == p2.getY());
-}
-
 std::string av::intToString(int i) {
     std::stringstream ss;
     ss << i;

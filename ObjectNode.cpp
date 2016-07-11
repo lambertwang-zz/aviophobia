@@ -1,21 +1,21 @@
 // aviophobia headers
-#include "RBNode.h"
+#include "ObjectNode.h"
 
-void av::RBNode::copyFrom(const av::RBNode *to_copy) {
+void av::ObjectNode::copyFrom(const av::ObjectNode *to_copy) {
     this->freeTree();
     this->p_obj = to_copy->getObj();
     this->color = to_copy->getColor();
     this->parent = to_copy->getParent();
-    av::RBNode *new_left = to_copy->getLeft(), *new_right = to_copy->getRight();
+    av::ObjectNode *new_left = to_copy->getLeft(), *new_right = to_copy->getRight();
     if (new_left) {
-        this->left = new av::RBNode(new_left);
+        this->left = new av::ObjectNode(new_left);
     }
     if (new_right) {
-        this->right = new av::RBNode(new_right);
+        this->right = new av::ObjectNode(new_right);
     }
 }
 
-av::RBNode::RBNode(HasId *obj, NodeColor color) {
+av::ObjectNode::ObjectNode(Object *obj, NodeColor color) {
     this->p_obj = obj;
     this->color = color;
     this->parent = nullptr;
@@ -23,13 +23,13 @@ av::RBNode::RBNode(HasId *obj, NodeColor color) {
     this->left = nullptr;
 }
 
-av::RBNode::RBNode(const RBNode *other) {
+av::ObjectNode::ObjectNode(const ObjectNode *other) {
     if (other) {
         this->copyFrom(other);
     }
 }
 
-void av::RBNode::freeTree() {
+void av::ObjectNode::freeTree() {
     if (this->left) {
         delete this->left;
         this->left = nullptr;
@@ -41,27 +41,27 @@ void av::RBNode::freeTree() {
     delete this;
 }
 
-av::HasId *av::RBNode::getObj() const {
+av::Object *av::ObjectNode::getObj() const {
     return this->p_obj;
 }
 
-void av::RBNode::setObj(HasId * obj) {
+void av::ObjectNode::setObj(Object * obj) {
     this->p_obj = obj;
 }
 
-av::NodeColor av::RBNode::getColor() const {
+av::NodeColor av::ObjectNode::getColor() const {
     return this->color;
 }
 
-int av::RBNode::getId() const {
+int av::ObjectNode::getId() const {
     return this->p_obj->getId();
 }
 
-void av::RBNode::setColor(NodeColor new_color) {
+void av::ObjectNode::setColor(NodeColor new_color) {
     this->color = new_color;
 }
 
-av::RBNode *av::RBNode::find(HasId * obj) {
+av::ObjectNode *av::ObjectNode::find(Object * obj) {
     if (obj->getId() == this->getId()) {
         return this;
     } else {
@@ -80,35 +80,35 @@ av::RBNode *av::RBNode::find(HasId * obj) {
     return nullptr;
 }
 
-av::RBNode *av::RBNode::findMin() {
+av::ObjectNode *av::ObjectNode::findMin() {
     if (this->left) {
         return this->left->findMin();
     }
     return this;
 }
 
-av::RBNode *av::RBNode::findMax() {
+av::ObjectNode *av::ObjectNode::findMax() {
     if (this->right) {
         return this->right->findMax();
     }
     return this;
 }
 
-av::RBNode *av::RBNode::findPredecessor() {
+av::ObjectNode *av::ObjectNode::findPredecessor() {
     if (this->left) {
         return this->left->findMax();
     }
     return nullptr;
 }
 
-av::RBNode * av::RBNode::findSuccessor() {
+av::ObjectNode * av::ObjectNode::findSuccessor() {
     if (this->right) {
         return this->right->findMin();
     }
     return nullptr;
 }
 
-int av::RBNode::insert(RBNode *n) {
+int av::ObjectNode::insert(ObjectNode *n) {
     if (n->getId() > this->getId()) {
         if (this->right) {
             return this->right->insert(n);
@@ -131,36 +131,36 @@ int av::RBNode::insert(RBNode *n) {
     return 0;
 }
 
-av::RBNode *av::RBNode::getLeft() const {
+av::ObjectNode *av::ObjectNode::getLeft() const {
     return this->left;
 }
 
-void av::RBNode::setLeft(RBNode *new_left) {
+void av::ObjectNode::setLeft(ObjectNode *new_left) {
     this->left = new_left;
 }
 
-av::RBNode *av::RBNode::getRight() const {
+av::ObjectNode *av::ObjectNode::getRight() const {
     return this->right;
 }
 
-void av::RBNode::setRight(RBNode *new_right) {
+void av::ObjectNode::setRight(ObjectNode *new_right) {
     this->right = new_right;
 }
 
-av::RBNode *av::RBNode::getParent() const {
+av::ObjectNode *av::ObjectNode::getParent() const {
     if (this->parent) {
         return this->parent;
     }
     return nullptr;
 }
 
-void av::RBNode::setParent(RBNode *node) {
+void av::ObjectNode::setParent(ObjectNode *node) {
     this->parent = node;
 }
 
-av::RBNode *av::RBNode::getSibling() const {
+av::ObjectNode *av::ObjectNode::getSibling() const {
     if (this->parent) {
-        av::RBNode* parentRight = this->getParent()->getRight();
+        av::ObjectNode* parentRight = this->getParent()->getRight();
         if (parentRight == this) {
             return this->parent->getLeft();
         } else {
@@ -170,27 +170,27 @@ av::RBNode *av::RBNode::getSibling() const {
     return nullptr;
 }
 
-av::RBNode * av::RBNode::getGrandparent() const {
+av::ObjectNode * av::ObjectNode::getGrandparent() const {
     if (this->parent) {
         return this->parent->getParent();
     }
     return nullptr;
 }
 
-av::RBNode * av::RBNode::getUncle() const {
+av::ObjectNode * av::ObjectNode::getUncle() const {
     if (this->parent) {
         return this->parent->getSibling();
     }
     return nullptr;
 }
 
-av::RBNode * av::RBNode::getParentsSibling() const {
+av::ObjectNode * av::ObjectNode::getParentsSibling() const {
     return this->getUncle();
 }
 
-void av::RBNode::rotateLeft() {
+void av::ObjectNode::rotateLeft() {
     if (this->right) {
-        RBNode *child = this->right;
+        ObjectNode *child = this->right;
         if (child->getLeft()) {
             this->right = child->getLeft();
             child->getLeft()->setParent(this);
@@ -210,9 +210,9 @@ void av::RBNode::rotateLeft() {
     }
 }
 
-void av::RBNode::rotateRight() {
+void av::ObjectNode::rotateRight() {
     if (this->left) {
-        RBNode *child = this->left;
+        ObjectNode *child = this->left;
         if (child->getRight()) {
             this->left = child->getRight();
             child->getRight()->setParent(this);

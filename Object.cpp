@@ -18,10 +18,15 @@
 #include "Object.h"
 #include "WorldManager.h"
 
+int av::Object::id_iterator = 0;
+
 av::Object::Object() {
+    // Generate and set unique object ID
+    av::Object::id_iterator++;
+    this->id = av::Object::id_iterator;
+
     this->type = "none";
     this->altitude = 2;
-    this->pos = av::Position();
 
     this->x_velocity = 0;
     this->x_velocity_countdown = 0;
@@ -52,20 +57,16 @@ av::Object::~Object() {
     }
 }
 
+int av::Object::getId() const {
+    return this->id;
+}
+
 void av::Object::setType(std::string new_type) {
     this->type = new_type;
 }
 
 std::string av::Object::getType() const{
     return this->type;
-}
-
-void av::Object::setPos(av::Position new_pos) {
-    this->pos = new_pos;
-}
-
-av::Position av::Object::getPos() const{
-    return this->pos;
 }
 
 int av::Object::setAltitude(int new_alt) {

@@ -2,15 +2,15 @@
 #include <stdlib.h>
 
 // aviophobia headers
-#include "HasId.h"
-#include "RBTree.h"
+#include "Object.h"
+#include "ObjectTree.h"
 
-void av::RBTree::copyFrom(const RBTree *to_copy) {
+void av::ObjectTree::copyFrom(const ObjectTree *to_copy) {
     this->freeTree();
-    this->p_root = new RBNode(to_copy->getRoot());
+    this->p_root = new ObjectNode(to_copy->getRoot());
 }
 
-void av::RBTree::freeTree() {
+void av::ObjectTree::freeTree() {
     if (this->p_root) {
         this->p_root->freeTree();
     }
@@ -18,7 +18,7 @@ void av::RBTree::freeTree() {
     this->count = 0;
 }
 
-void av::RBTree::insertCase1(RBNode *node) {
+void av::ObjectTree::insertCase1(ObjectNode *node) {
     if (!node->getParent()) {
         node->setColor(BLACK);
         return;
@@ -26,20 +26,20 @@ void av::RBTree::insertCase1(RBNode *node) {
     insertCase2(node);
 }
 
-void av::RBTree::insertCase2(RBNode *node) {
+void av::ObjectTree::insertCase2(ObjectNode *node) {
     if (node->getParent()->getColor() == BLACK) {
         return;
     }
     insertCase3(node);
 }
 
-void av::RBTree::insertCase3(RBNode * node) {
-    RBNode *uncle = node->getUncle();
+void av::ObjectTree::insertCase3(ObjectNode * node) {
+    ObjectNode *uncle = node->getUncle();
 
     if (uncle && (uncle->getColor() == RED)) {
         node->getParent()->setColor(BLACK);
         uncle->setColor(BLACK);
-        RBNode *grandparent = node->getGrandparent();
+        ObjectNode *grandparent = node->getGrandparent();
         grandparent->setColor(RED);
         this->insertCase1(grandparent);
     } else {
@@ -47,14 +47,14 @@ void av::RBTree::insertCase3(RBNode * node) {
     }
 }
 
-void av::RBTree::insertCase4(RBNode * node) {
-    RBNode *grandparent = node->getGrandparent();
+void av::ObjectTree::insertCase4(ObjectNode * node) {
+    ObjectNode *grandparent = node->getGrandparent();
 
-    RBNode *parent = node->getParent();
+    ObjectNode *parent = node->getParent();
     if ((node == parent->getRight()) && (parent == grandparent->getLeft())) {
         // Left rotation
         /*
-        RBNode *left = node->getLeft();
+        ObjectNode *left = node->getLeft();
         grandparent->setLeft(node);
         node->setLeft(parent);
         parent->setRight(left);
@@ -66,7 +66,7 @@ void av::RBTree::insertCase4(RBNode * node) {
         if ((node == node->getParent()->getLeft()) && (node->getParent() == grandparent->getRight())) {
             // Right rotation
             /*
-            RBNode *right = node->getRight();
+            ObjectNode *right = node->getRight();
             grandparent->setRight(node);
             node->setRight(parent);
             parent->setLeft(right);
@@ -79,9 +79,9 @@ void av::RBTree::insertCase4(RBNode * node) {
     insertCase5(node);
 }
 
-void av::RBTree::insertCase5(RBNode *node) {
-    RBNode *grandparent = node->getGrandparent();
-    RBNode *parent = node->getParent();
+void av::ObjectTree::insertCase5(ObjectNode *node) {
+    ObjectNode *grandparent = node->getGrandparent();
+    ObjectNode *parent = node->getParent();
     parent->setColor(BLACK);
     grandparent->setColor(RED);
     if (node == parent->getLeft()) {
@@ -97,19 +97,19 @@ void av::RBTree::insertCase5(RBNode *node) {
     }
 }
 
-void av::RBTree::deleteCase1(RBNode *node) {
+void av::ObjectTree::deleteCase1(ObjectNode *node) {
     if (node->getParent()) {
         this->deleteCase2(node);
     }
 }
 
-void av::RBTree::deleteCase2(RBNode *node) {
-    RBNode *sibling = node->getSibling();
+void av::ObjectTree::deleteCase2(ObjectNode *node) {
+    ObjectNode *sibling = node->getSibling();
 
     if (sibling->getColor() == RED) {
         node->getParent()->setColor(RED);
         sibling->setColor(BLACK);
-        RBNode *parent = node->getParent();
+        ObjectNode *parent = node->getParent();
         if (node == parent->getLeft()) {
             parent->rotateLeft();
         } else {
@@ -123,8 +123,8 @@ void av::RBTree::deleteCase2(RBNode *node) {
     this->deleteCase3(node);
 }
 
-void av::RBTree::deleteCase3(RBNode *node) {
-    RBNode *sibling = node->getSibling();
+void av::ObjectTree::deleteCase3(ObjectNode *node) {
+    ObjectNode *sibling = node->getSibling();
 
     if ((node->getParent()->getColor() == BLACK) &&
         (sibling->getColor() == BLACK) &&
@@ -137,8 +137,8 @@ void av::RBTree::deleteCase3(RBNode *node) {
     }
 }
 
-void av::RBTree::deleteCase4(RBNode *node) {
-    RBNode *sibling = node->getSibling();
+void av::ObjectTree::deleteCase4(ObjectNode *node) {
+    ObjectNode *sibling = node->getSibling();
 
     if ((node->getParent()->getColor() == RED) &&
         (sibling->getColor() == BLACK) &&
@@ -151,8 +151,8 @@ void av::RBTree::deleteCase4(RBNode *node) {
     }
 }
 
-void av::RBTree::deleteCase5(RBNode *node) {
-    RBNode *sibling = node->getSibling();
+void av::ObjectTree::deleteCase5(ObjectNode *node) {
+    ObjectNode *sibling = node->getSibling();
 
     if (sibling->getColor() == BLACK) { 
         /* this if statement is trivial,
@@ -179,8 +179,8 @@ void av::RBTree::deleteCase5(RBNode *node) {
     this->deleteCase6(node);
 }
 
-void av::RBTree::deleteCase6(RBNode * node) {
-    RBNode *sibling = node->getSibling(), *parent = node->getParent();
+void av::ObjectTree::deleteCase6(ObjectNode * node) {
+    ObjectNode *sibling = node->getSibling(), *parent = node->getParent();
 
     sibling->setColor(parent->getColor());
     parent->setColor(BLACK);
@@ -198,9 +198,9 @@ void av::RBTree::deleteCase6(RBNode * node) {
     }
 }
 
-void av::RBTree::replaceNode(RBNode *to_replace, RBNode *node) {
+void av::ObjectTree::replaceNode(ObjectNode *to_replace, ObjectNode *node) {
     // Precondition that to_replace has at most one non-null child
-    RBNode *parent = to_replace->getParent();
+    ObjectNode *parent = to_replace->getParent();
     if (parent) {
         if (parent->getLeft() == to_replace) {
             parent->setLeft(node);
@@ -215,16 +215,16 @@ void av::RBTree::replaceNode(RBNode *to_replace, RBNode *node) {
     }
 }
 
-av::RBTree::RBTree() {
+av::ObjectTree::ObjectTree() {
     this->p_root = nullptr;
     this->count = 0;
 }
 
-av::RBTree::RBTree(const RBTree *other) {
+av::ObjectTree::ObjectTree(const ObjectTree *other) {
     this->copyFrom(other);
 }
 
-av::RBTree &av::RBTree::operator=(const RBTree *rhs) {
+av::ObjectTree &av::ObjectTree::operator=(const ObjectTree *rhs) {
     // Make sure objects aren't the same
     if (this != rhs) {
         // Free current list if allocated already
@@ -235,16 +235,16 @@ av::RBTree &av::RBTree::operator=(const RBTree *rhs) {
     return *this;
 }
 
-av::RBTree::~RBTree() {
+av::ObjectTree::~ObjectTree() {
     this->freeTree();
 }
 
-av::RBNode * av::RBTree::getRoot() const {
+av::ObjectNode * av::ObjectTree::getRoot() const {
     return this->p_root;
 }
 
-int av::RBTree::insert(HasId *obj) {
-    RBNode *new_node = new RBNode(obj, RED);
+int av::ObjectTree::insert(Object *obj) {
+    ObjectNode *new_node = new ObjectNode(obj, RED);
     if (!this->p_root) {
         this->p_root = new_node;
         this->insertCase1(new_node);
@@ -260,7 +260,7 @@ int av::RBTree::insert(HasId *obj) {
     return 0;
 }
 
-int av::RBTree::remove(HasId *obj) {
+int av::ObjectTree::remove(Object *obj) {
     if (this->count == 0) {
         return -2; // No items to remove
     }
@@ -268,7 +268,7 @@ int av::RBTree::remove(HasId *obj) {
     return this->removeNode(this->p_root->find(obj));
 }
 
-int av::RBTree::removeNode(RBNode * node) {
+int av::ObjectTree::removeNode(ObjectNode * node) {
     if (!node) {
         return -3; // Node does not exist in tree
     }
@@ -292,14 +292,14 @@ int av::RBTree::removeNode(RBNode * node) {
     // Node has two non-null children
     if (node->getRight() && node->getLeft()) {
         // Arbitrarily pick successor as nodes ids are strictly increasing, so it's slightly better to do so
-        RBNode *successor = node->findSuccessor();
+        ObjectNode *successor = node->findSuccessor();
         node->setObj(successor->getObj());
 
         return this->removeNode(successor);
     }
 
     // Node has one child
-    RBNode *child = node->getLeft() ? node->getLeft() : node->getRight();
+    ObjectNode *child = node->getLeft() ? node->getLeft() : node->getRight();
 
     this->replaceNode(node, child);
     
@@ -317,22 +317,22 @@ int av::RBTree::removeNode(RBNode * node) {
     return 0;
 }
 
-bool av::RBTree::contains(HasId *obj) const {
+bool av::ObjectTree::contains(Object *obj) const {
     return p_root->find(obj) != NULL;
 }
 
-void av::RBTree::clear() {
+void av::ObjectTree::clear() {
     this->freeTree();
 }
 
-int av::RBTree::getCount() const {
+int av::ObjectTree::getCount() const {
     return this->count;
 }
 
-bool av::RBTree::isEmpty() const {
+bool av::ObjectTree::isEmpty() const {
     return this->count == 0;
 }
 
-av::RBTree av::RBTree::operator+(RBTree list) {
-    return RBTree();
+av::ObjectTree av::ObjectTree::operator+(ObjectTree list) {
+    return ObjectTree();
 }

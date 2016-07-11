@@ -35,9 +35,9 @@ int av::InputManager::startUp() {
         
         // Set member parameters
         this->setType("INPUT_MANAGER");
-        
-        // Disable key repeat
-        av::GraphicsManager &graphics_manager = av::GraphicsManager::getInstance();
+
+        // Enable text input
+        SDL_StartTextInput();
 
         log_manager.writeLog(2, "av::InputManager::startUp(): InputManager started.");
         return 0;

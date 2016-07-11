@@ -15,11 +15,11 @@
 #include <string>
 
 // aviophobia headers
-#include "HasId.h"
+#include "Object.h"
 
 namespace av {
 
-    class Music: public HasId {
+    class Music: public Object {
     private:
         // Disallow copy
         Music (av::Music const&);

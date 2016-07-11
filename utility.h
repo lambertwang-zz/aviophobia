@@ -23,12 +23,6 @@ long int getCurrentTime();
 // @param nanoseconds Amount of time in nanoseconds to sleep
 void nanoSleep(long nanoseconds);
 
-// Returns true if two positions are at the same location
-bool positionsIntersect(av::Position p1, av::Position p2);
-
-// Adjusts a position relative to the world into a position relative to the view
-av::Position worldToView(av::Position world_pos);
-
 // Converts an int to a string
 std::string intToString(int i);
 

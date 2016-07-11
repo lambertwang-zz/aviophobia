@@ -21,8 +21,6 @@ const std::string COLLISION_EVENT = "av::collision";
 
     class EventCollision : public Event {
     private:
-        // The position of the collision
-        av::Position pos;
         // The object that caused the collision
         av::Object *p_obj1;
         // The object that was collided with
@@ -33,7 +31,7 @@ const std::string COLLISION_EVENT = "av::collision";
         EventCollision();
 
         // Constructor with initial parameters
-        EventCollision(av::Object *p_o1, av::Object *p_o2, av::Position p);
+        EventCollision(av::Object *p_o1, av::Object *p_o2);
         
         // Sets the object that caused the collision
         void setObject1(av::Object *p_new_o1);
@@ -43,10 +41,6 @@ const std::string COLLISION_EVENT = "av::collision";
         void setObject2(av::Object *p_new_o2);
         // Returns the object that was collided with
         av::Object *getObject2() const;
-        // Sets the collision's position
-        void setPosition(av::Position p);
-        // Returns the collision's position
-        av::Position getPosition() const;
 
     };
 } // End of namespace

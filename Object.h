@@ -13,8 +13,6 @@
 
 // aviophobia headers
 #include "Event.h"
-#include "HasId.h"
-#include "Position.h"
 
 namespace av {
 
@@ -26,8 +24,16 @@ enum Solidness {
 
 const int MAX_OBJ_EVENTS = 128;
 
-    class Object: public HasId {
+    class Object {
     private:
+        // The unique object identifier
+        // The id is not allowed to be set. Setting it can and will screw
+        // with insertion and removal from ObjectLists because they store
+        // Objects ordered by id.
+        int id;
+        // For maintaining a unique id for each object
+        static int id_iterator;
+
         // The user-defined type for the object
         std::string type;
         
@@ -38,8 +44,7 @@ const int MAX_OBJ_EVENTS = 128;
         // Whether to allow movement onto a soft object
         // True if this object won't move into soft objects
         bool no_soft;
-        // The object's 2d position in the world
-        av::Position pos;
+
         // Horizontal velocity
         double x_velocity;
         // Countdown for horizontal movement
@@ -73,6 +78,9 @@ const int MAX_OBJ_EVENTS = 128;
         // Removes the object from the game world
         virtual ~Object();
 
+        // Gets the object's id
+        int getId() const;
+
         // Sets the object's type
         void setType(std::string new_type);
         // Gets the object's type
@@ -96,11 +104,6 @@ const int MAX_OBJ_EVENTS = 128;
         void setNoSoft(bool new_no_soft = true);
         // Returns the no_soft status of this object
         bool getNoSoft() const;
-
-        // Sets the object's pos
-        void setPos(av::Position new_pos);
-        // Gets the object's pos
-        av::Position getPos() const;
 
         // get x velocity
         double getXVelocity() const;

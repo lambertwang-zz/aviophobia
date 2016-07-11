@@ -63,8 +63,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\t-lawang\Documents\git\libraries\SDL2-2.0.4\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\t-lawang\Documents\git\libraries\SDL2-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\t-lawang\Documents\git\libraries\SDL2-2.0.4\include;C:\Users\t-lawang\Documents\git\libraries\glew-1.13.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\t-lawang\Documents\git\libraries\SDL2-2.0.4\lib\x86;C:\Users\t-lawang\Documents\git\libraries\glew-1.13.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -110,19 +110,19 @@
     <ClCompile Include="EventStep.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GraphicsManager.cpp" />
-    <ClCompile Include="HasId.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="ObjectListIterator.cpp" />
-    <ClCompile Include="Position.cpp" />
-    <ClCompile Include="RBNode.cpp" />
-    <ClCompile Include="RBTree.cpp" />
+    <ClCompile Include="ObjectNode.cpp" />
+    <ClCompile Include="ObjectTree.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="TreeIterator.cpp" />
     <ClCompile Include="utility.cpp" />
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
@@ -137,10 +137,12 @@
     <ClInclude Include="EventStep.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GraphicsManager.h" />
-    <ClInclude Include="HasId.h" />
     <ClInclude Include="EventQuit.h" />
-    <ClInclude Include="RBNode.h" />
-    <ClInclude Include="RBTree.h" />
+    <ClInclude Include="Frame.h" />
+    <ClInclude Include="ObjectNode.h" />
+    <ClInclude Include="ObjectTree.h" />
+    <ClInclude Include="Shape.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="TreeIterator.h" />
     <ClInclude Include="WorldState.h" />
     <ClInclude Include="Input.h" />
@@ -149,7 +151,6 @@
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Position.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="utility.h" />

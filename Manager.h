@@ -13,7 +13,7 @@
 
 // dragonfly headers
 #include "Event.h"
-#include "ObjectList.h"
+#include "ObjectTree.h"
 
 namespace av {
 
@@ -27,7 +27,7 @@ const int MAX_EVENTS = 128;
         // List of events
         std::string event[MAX_EVENTS];
         // Objects interested in an event
-        av::ObjectList obj_list[MAX_EVENTS];
+        av::ObjectTree obj_list[MAX_EVENTS];
 
         // Type identifier
         std::string type;

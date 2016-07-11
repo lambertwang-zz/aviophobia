@@ -6,6 +6,7 @@
 #include "GameManager.h"
 #include "LogManager.h"
 #include "Manager.h"
+#include "TreeIterator.h"
 #include "WorldManager.h"
 
 av::Manager::Manager() {
@@ -43,7 +44,6 @@ int av::Manager::onEvent(const av::Event *p_event) const {
     av::GameManager &game_manager = av::GameManager::getInstance();
     game_manager.handleGlobalEvent(p_event);
 
-
     int return_count = 0;
 
     for (int i = 0; i < this->event_count; i++) {
@@ -52,10 +52,10 @@ int av::Manager::onEvent(const av::Event *p_event) const {
                 return 0;
             }
             
-            av::ObjectListIterator li(&(obj_list[i]));
+            av::TreeIterator ti = TreeIterator(&(this->obj_list[i]));
 
-            for (li.first(); !li.isDone(); li.next()) {
-                li.currentObject()->eventHandler(p_event);
+            for (ti.first(); !ti.isDone(); ti.next()) {
+                ti.currentObject()->eventHandler(p_event);
                 return_count++;
             }
             
@@ -100,7 +100,7 @@ int av::Manager::registerInterest(av::Object *p_o, std::string event_type) {
         return -1;
     }
     this->event[this->event_count] = event_type;
-    this->obj_list[this->event_count] = av::ObjectList();
+    this->obj_list[this->event_count] = av::ObjectTree();
     this->obj_list[this->event_count].insert(p_o);
     this->event_count++;
     return 0;

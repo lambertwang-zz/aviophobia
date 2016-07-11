@@ -1,75 +1,74 @@
 #pragma once
-#ifndef __RBTREE_H__
-#define __RBTREE_H__
+#ifndef __ObjectTree_H__
+#define __ObjectTree_H__
 
 // aviophobia headers
-#include "HasId.h"
-#include "RBNode.h"
+#include "ObjectNode.h"
 
 namespace av {
-    class RBTree {
+    class ObjectTree {
     private:
         // The number of objects in the tree
         int count;
         // List of pointers for dynamically sized array
-        RBNode *p_root;
+        ObjectNode *p_root;
 
         // Returns the index of where the object with the specified 
         // id is located or where it should be inserted.
         // int find(int id) const;
         // Copies another list into this list
-        void copyFrom(const RBTree *to_copy);
+        void copyFrom(const ObjectTree *to_copy);
 
         // Frees the memory allocated for this list
         void freeTree();
 
         // The tree is empty
-        void insertCase1(RBNode *node);
-        void insertCase2(RBNode *node);
-        void insertCase3(RBNode *node);
-        void insertCase4(RBNode *node);
-        void insertCase5(RBNode *node);
+        void insertCase1(ObjectNode *node);
+        void insertCase2(ObjectNode *node);
+        void insertCase3(ObjectNode *node);
+        void insertCase4(ObjectNode *node);
+        void insertCase5(ObjectNode *node);
 
 
-        void deleteCase1(RBNode *node);
-        void deleteCase2(RBNode *node);
-        void deleteCase3(RBNode *node);
-        void deleteCase4(RBNode *node);
-        void deleteCase5(RBNode *node);
-        void deleteCase6(RBNode *node);
+        void deleteCase1(ObjectNode *node);
+        void deleteCase2(ObjectNode *node);
+        void deleteCase3(ObjectNode *node);
+        void deleteCase4(ObjectNode *node);
+        void deleteCase5(ObjectNode *node);
+        void deleteCase6(ObjectNode *node);
 
-        void replaceNode(RBNode *to_replace, RBNode *node);
+        void replaceNode(ObjectNode *to_replace, ObjectNode *node);
 
     public:
         // Constructor for the object list.
-        RBTree();
+        ObjectTree();
 
         // Copy operator
-        RBTree(const RBTree *other);
+        ObjectTree(const ObjectTree *other);
         // Assignment operator
-        RBTree &operator=(const RBTree *rhs);
+        ObjectTree &operator=(const ObjectTree *rhs);
 
         // Frees up allocated memory
-        ~RBTree();
+        ~ObjectTree();
 
         // Returns the root of this tree
-        RBNode *getRoot() const;
+        ObjectNode *getRoot() const;
 
         // Insert an object pointer in the list
         // Returns true if successful, false otherwise
         // Maintains order on the list by object id
         // Performs a binary search for insertion sort
-        int insert(HasId *obj);
+        int insert(Object *obj);
 
         // Removes an object pointer from the list
         // Returns 0 if found -1 otherwise
         // Performs a binary search
-        int remove(HasId *obj);
+        int remove(Object *obj);
 
-        int removeNode(RBNode *node);
+        int removeNode(ObjectNode *node);
 
         // Returns true if this list contains the object
-        bool contains(HasId *obj) const;
+        bool contains(Object *obj) const;
 
         // Removes all objects from the list
         void clear();
@@ -80,9 +79,9 @@ namespace av {
         // Returns whether the list is empty or not
         bool isEmpty() const;
 
-        // Overload + operator for RBTrees
-        RBTree operator+(RBTree list);
+        // Overload + operator for ObjectTrees
+        ObjectTree operator+(ObjectTree list);
     };
 } // End of namespace
 
-#endif // __RBTREE_H__
+#endif // __ObjectTree_H__

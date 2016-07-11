@@ -7,40 +7,14 @@
 
 // aviophobia headers
 #include "Manager.h"
-#include "Position.h"
 
 namespace av {
 
-// String justifications.
-enum Justification {
-    LEFT_JUSTIFIED,
-    CENTER_JUSTIFIED,
-    RIGHT_JUSTIFIED,
-};
-
 // Default settings for window
-const int WINDOW_HORIZONTAL_PIXELS_DEFAULT = 1366;
-const int WINDOW_VERTICAL_PIXELS_DEFAULT = 768;
+const int DEFAULT_WINDOW_WIDTH = 800;
+const int DEFAULT_WINDOW_HEIGHT = 600;
 
-const std::string WINDOW_TITLE_DEFAULT = "Dragonfly";
-const std::string FONT_FILE_DEFAULT = "df-font.ttf";
-
-// Returns the width in pixels of an ascii character
-// 32 default
-float charHeight(bool default_dimensions = false);
-// Returns the height in pixels of an ascii character
-// 12.8 default
-float charWidth(bool default_dimensions = false);
-
-// Convert ascii spaces (x, y) to pixels (x, y)
-av::Position spacesToPixels(av::Position spaces);
-
-// Convert ascii spaces (x, y) to pixels (x, y)
-av::Position defaultSpacesToPixels(av::Position spaces);
-
-// Convert pixels (x, y) to ascii spaces (x, y)
-av::Position pixelsToSpaces(av::Position pixels);
-
+const std::string WINDOW_TITLE_DEFAULT = "aviophobia";
     /**
     *   GraphicsManager
     *   Handles creation of a window and rendering to the window.
@@ -51,6 +25,9 @@ av::Position pixelsToSpaces(av::Position pixels);
         SDL_Window *window;
         // The surface containing the window
         SDL_Surface *surface;
+
+        // The OpenGL Context
+        SDL_GLContext context;
 
         // Singleton
         GraphicsManager();
@@ -91,6 +68,12 @@ av::Position pixelsToSpaces(av::Position pixels);
         // Render the current window buffer
         // Returns 0 if successful, -1 otherwise
         int swapBuffers();
+
+        // Renders a triangle
+        void drawTriangle();
+
+        // Renders a quad
+        void drawQuad();
     };
 } // End of namespace
 

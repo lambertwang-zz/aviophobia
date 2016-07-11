@@ -3,19 +3,18 @@
 #define __TREEITERATOR_H__
 
 // aviophobia headers
-#include "RBTree.h"
+#include "ObjectTree.h"
 
 namespace av {
     class TreeIterator {
     private:
         // List of pointers for dynamically sized array
-        RBTree *p_tree;
+        const ObjectTree *p_tree;
 
-        RBNode *p_current;
-        RBNode *p_next;
+        ObjectNode *p_node;
     public:
         // Constructor for the object list.
-        TreeIterator(RBTree *tree);
+        TreeIterator(const ObjectTree *tree);
 
         // Puts the index to the start of the list
         void first();
@@ -25,7 +24,7 @@ namespace av {
         bool isDone() const;
 
         // Returns the object currently at the 
-        av::HasId *currentObject() const;
+        av::Object *currentObject() const;
     };
 } // End of namespace
 
