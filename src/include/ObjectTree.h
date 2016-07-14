@@ -13,12 +13,6 @@ namespace av {
         // List of pointers for dynamically sized array
         ObjectNode *p_root;
 
-        // Returns the index of where the object with the specified 
-        // id is located or where it should be inserted.
-        // int find(int id) const;
-        // Copies another list into this list
-        void copyFrom(const ObjectTree *to_copy);
-
         // Frees the memory allocated for this list
         void freeTree();
 
@@ -28,7 +22,6 @@ namespace av {
         void insertCase3(ObjectNode *node);
         void insertCase4(ObjectNode *node);
         void insertCase5(ObjectNode *node);
-
 
         void deleteCase1(ObjectNode *node);
         void deleteCase2(ObjectNode *node);
@@ -50,6 +43,12 @@ namespace av {
 
         // Frees up allocated memory
         ~ObjectTree();
+
+        // Returns the index of where the object with the specified 
+        // id is located or where it should be inserted.
+        // int find(int id) const;
+        // Copies another list into this list
+        void copyFrom(const ObjectTree *to_copy);
 
         // Returns the root of this tree
         ObjectNode *getRoot() const;

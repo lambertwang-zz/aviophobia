@@ -5,7 +5,8 @@
 // standard headers
 #include <string>
 
-// SDL headers
+// SDL/GL headers
+#include <GL/glew.h>
 
 namespace av {
 

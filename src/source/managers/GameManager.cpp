@@ -2,15 +2,14 @@
  * Game manager class
  */
 
-// c++ standard libraries
+// standard headers
 #if defined _WIN32 || defined _WIN64
 #include <Windows.h>
 #pragma comment(lib, "winmm.lib")
 #endif
 
-// Dragonfly headers
+// aviophobia headers
 #include "Clock.h"
-#include "EventBeforeDraw.h"
 #include "EventStep.h"
 #include "GameManager.h"
 #include "GraphicsManager.h"
@@ -19,6 +18,16 @@
 #include "ResourceManager.h"
 #include "utility.h"
 #include "WorldManager.h"
+
+
+#include "Shape.h"
+
+av::WorldState av::GameManager::game_state = WorldState();
+av::WorldState av::GameManager::render_state = WorldState();
+SDL_mutex *av::GameManager::m_game_state = SDL_CreateMutex();
+SDL_mutex *av::GameManager::m_render_state = SDL_CreateMutex();
+SDL_cond *av::GameManager::c_game_state = SDL_CreateCond();
+SDL_cond *av::GameManager::c_render_state = SDL_CreateCond();
 
 av::GameManager::GameManager() {
 }
@@ -40,7 +49,6 @@ int av::GameManager::startUp() {
         this->setType("GAME_MANAGER");
         this->setGameOver(false);
 
-        // 33333 microseconds
         this->frame_time = av::DEFAULT_FRAME_TIME;
         this->step_count = 0;
 
@@ -89,10 +97,10 @@ void av::GameManager::shutDown() {
         log_manager.writeLog(2, "av::GameManager::shutDown(): Closing GameManager");
 
         // Shutdown managers now
-        av::WorldManager &world_manager = av::WorldManager::getInstance();
-        world_manager.shutDown();
         av::GraphicsManager &graphics_manager = av::GraphicsManager::getInstance();
         graphics_manager.shutDown();
+        av::WorldManager &world_manager = av::WorldManager::getInstance();
+        world_manager.shutDown();
         av::InputManager  &input_manager = av::InputManager::getInstance();
         input_manager.shutDown();
         av::ResourceManager  &resource_manager = av::ResourceManager::getInstance();
@@ -104,61 +112,106 @@ void av::GameManager::shutDown() {
 
 void av::GameManager::run() {
     if (this->isStarted()) {
-        // Create variables required for timing outside of loop scope
-        Clock clock;
-        int adjust_time = 0;
+        // Create a thread for moving world state buffers
+        SDL_Thread* swapStateThreadId = SDL_CreateThread(
+            &av::GameManager::swapStates,
+            "SwapStateThread",
+            NULL);
+            
 
-        av::LogManager &log_manager = av::LogManager::getInstance();
+        // Put rendering on a different thread
+        SDL_Thread* renderingThreadId = SDL_CreateThread(
+            &av::GraphicsManager::renderLoop, 
+            "RenderingThread", 
+            NULL);
+            
+        this->gameLoop();
 
-        while (!this->game_over) {
-
-            log_manager.writeLog("av::GameManager::run(): Starting loop step %d", this->step_count);
-
-            // Reset clock
-            clock.delta();
-            // Increment step count
-            this->step_count++;
-
-            // Send EVENT_STEP to all objects
-            av::EventStep p_step_event = av::EventStep(this->step_count);
-            onEvent(&p_step_event);
-
-            // Retrieve input
-            av::InputManager  &input_manager = av::InputManager::getInstance();
-            input_manager.getInput();
-
-            av::WorldManager &world_manager = av::WorldManager::getInstance();
-            // Call worldManager update
-            world_manager.update();
-
-            // Send EVENT_BEFOREDRAW to all objects
-            av::EventBeforeDraw p_bd_event = av::EventBeforeDraw();
-            onEvent(&p_bd_event);
-
-            // Call worldManager draw
-            world_manager.draw();
-
-            // Swap graphics buffers
-            av::GraphicsManager &graphics_manager = av::GraphicsManager::getInstance();
-            graphics_manager.swapBuffers();
-
-            // Adjust sleep time for additional framerate accuracy
-            int loop_time = clock.split();
-            long sleep_time = (this->frame_time - loop_time - adjust_time);
-            // Reset clock before sleeping to calculate actual sleep time
-            clock.delta();
-            // Multiply microseconds to obtain sleep time in nanoseconds
-            if (sleep_time > 0){
-                av::nanoSleep(sleep_time * 1000L);
-                // Calculate adjust from difference between expected and actual sleep times
-                adjust_time = clock.split() - sleep_time;
-            }
-            log_manager.writeLog("av::GameManager::run(): Running. Steps: %d, Elapsed (ms): %d, Sleep (ns): %d", this->step_count, loop_time, sleep_time);
-
-        }
+        SDL_WaitThread(renderingThreadId, NULL);
+        SDL_WaitThread(swapStateThreadId, NULL);
     } else {
         av::LogManager &log_manager = av::LogManager::getInstance();
         log_manager.writeLog(2, "av::GameManager::run(): GameManager must be started before it can be run");
+    }
+}
+
+int av::GameManager::swapStates(void *data) {
+    WorldState swapState = WorldState();
+
+    av::GameManager &game_manager = av::GameManager::getInstance();
+
+    while (!game_manager.getGameOver()) {
+        // Always wait for a gamestate update
+        SDL_LockMutex(m_game_state);
+        SDL_CondWait(c_game_state, m_game_state);
+
+        // Swap the game state into itself
+        swapState.copy(game_state);
+
+        SDL_UnlockMutex(m_game_state);
+
+        // Lock the render state
+        SDL_LockMutex(m_render_state);
+        
+        render_state.copy(swapState);
+
+        SDL_UnlockMutex(m_render_state);
+        SDL_CondSignal(c_render_state);
+    }
+
+    return 0;
+}
+
+void av::GameManager::gameLoop() {
+    // Create variables required for timing outside of loop scope
+    Clock clock;
+    int adjust_time = 0;
+
+    av::LogManager &log_manager = av::LogManager::getInstance();
+    av::InputManager  &input_manager = av::InputManager::getInstance();
+    av::WorldManager &world_manager = av::WorldManager::getInstance();
+
+    while (!this->game_over) {
+        log_manager.writeLog("av::GameManager::run(): Starting loop step %d", this->step_count);
+
+        // Reset clock
+        clock.delta();
+        // Increment step count
+        this->step_count++;
+
+        // Lock the game state
+        SDL_LockMutex(m_game_state);
+
+        // Send EVENT_STEP to all objects
+        av::EventStep p_step_event = av::EventStep(this->step_count);
+        onEvent(&p_step_event);
+
+        // Retrieve input
+        input_manager.getInput();
+
+        // Call worldManager update
+        world_manager.update();
+
+        // Unlock the mutex
+        SDL_UnlockMutex(m_game_state);
+        SDL_CondSignal(c_game_state);
+
+        // Adjust sleep time for additional framerate accuracy
+        int loop_time = clock.delta();
+        // Reset clock before sleeping to calculate actual sleep time
+        // clock.delta();
+        long sleep_time = (this->frame_time - loop_time - adjust_time);
+        // Multiply microseconds to obtain sleep time in nanoseconds
+        if (sleep_time > 0){
+            av::microSleep(sleep_time);
+            // Calculate adjust from difference between expected and actual sleep times
+            adjust_time = clock.split() - sleep_time;
+        } else {
+            adjust_time = 0;
+        }
+        log_manager.writeLog(
+            "av::GameManager::run(): Running. Steps: %d, Elapsed (us): %d, Sleep (us): %d, Adjust (us): %d", 
+            this->step_count, loop_time, sleep_time, adjust_time);
     }
 }
 
@@ -190,9 +243,6 @@ void av::GameManager::handleGlobalEvent(const av::Event * p_event) {
 }
 
 bool av::GameManager::isValid(std::string event_name) const {
-    if (event_name.compare(av::BEFOREDRAW_EVENT) == 0) {
-        return true;
-    }
     if (event_name.compare(av::STEP_EVENT) == 0) {
         return true;
     }

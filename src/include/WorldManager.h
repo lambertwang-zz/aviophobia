@@ -68,9 +68,6 @@ const int MAX_ALTITUDE = 4;
         // Updates the world
         void update();
 
-        // Draws all objects in view bottom up from altitude 0 to MAX_ALTITUDE
-        void draw();
-
         // Indicate Object is to be deleted at the end of the current game loop
         // Returns 0 if successfull, -1 otherwise
         int markForDelete(av::Object *p_o);

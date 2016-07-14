@@ -28,191 +28,188 @@
     <Filter Include="Header Files\audio">
       <UniqueIdentifier>{e889823a-f02d-4b6d-9850-0931781810cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\managers">
-      <UniqueIdentifier>{731729b7-8da8-4955-8f76-73739fce60d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\events">
-      <UniqueIdentifier>{7c344d3f-6d67-4880-a6b4-8f7f30a21868}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\utility">
-      <UniqueIdentifier>{2d683c8f-f910-4044-b935-1472534daddd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\models">
-      <UniqueIdentifier>{879f83f7-a71a-4e83-8a60-4ec83063b254}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\audio">
-      <UniqueIdentifier>{1c8d03ec-b939-4a4a-b14f-9ec56234d5eb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\sprite">
       <UniqueIdentifier>{9eebcf1a-c3f7-429b-87cf-c71db3910cee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\audio">
+      <UniqueIdentifier>{8856de7d-6c7d-4ab3-b3ef-0aa878b11ced}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\managers">
+      <UniqueIdentifier>{39fa61b0-89fb-4633-a8db-5fa25a1955e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\models">
+      <UniqueIdentifier>{61f79054-7a1c-42a8-8741-953ee5606954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\events">
+      <UniqueIdentifier>{19531c72-56f9-4b6c-bea5-7dab83beaed0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\sprite">
-      <UniqueIdentifier>{f30fbd54-d227-4ecf-bd02-e344ebccf630}</UniqueIdentifier>
+      <UniqueIdentifier>{f1757b98-0c28-482d-ba46-09c5ab6704bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utility">
+      <UniqueIdentifier>{55a0e6ee-f020-4a57-aa55-4319f32f7af4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GraphicsManager.cpp">
-      <Filter>Source Files\managers</Filter>
-    </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>Source Files\managers</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\managers</Filter>
-    </ClCompile>
-    <ClCompile Include="LogManager.cpp">
-      <Filter>Source Files\managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager.cpp">
-      <Filter>Source Files\managers</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files\managers</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldManager.cpp">
-      <Filter>Source Files\managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Event.cpp">
+    <ClCompile Include="src\source\events\Event.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="EventBeforeDraw.cpp">
+    <ClCompile Include="src\source\events\EventCollision.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="EventCollision.cpp">
+    <ClCompile Include="src\source\events\EventJoystick.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="EventJoystick.cpp">
+    <ClCompile Include="src\source\events\EventKeyboard.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="EventKeyboard.cpp">
+    <ClCompile Include="src\source\events\EventMouse.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="EventMouse.cpp">
+    <ClCompile Include="src\source\events\EventQuit.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="EventStep.cpp">
+    <ClCompile Include="src\source\events\EventStep.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="Clock.cpp">
-      <Filter>Source Files\utility</Filter>
+    <ClCompile Include="src\source\managers\GameManager.cpp">
+      <Filter>Source Files\managers</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files\utility</Filter>
+    <ClCompile Include="src\source\managers\GraphicsManager.cpp">
+      <Filter>Source Files\managers</Filter>
     </ClCompile>
-    <ClCompile Include="utility.cpp">
-      <Filter>Source Files\utility</Filter>
+    <ClCompile Include="src\source\managers\InputManager.cpp">
+      <Filter>Source Files\managers</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="src\source\managers\LogManager.cpp">
+      <Filter>Source Files\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\source\managers\Manager.cpp">
+      <Filter>Source Files\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\source\managers\ResourceManager.cpp">
+      <Filter>Source Files\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\source\managers\WorldManager.cpp">
+      <Filter>Source Files\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\source\models\Object.cpp">
       <Filter>Source Files\models</Filter>
     </ClCompile>
-    <ClCompile Include="Music.cpp">
+    <ClCompile Include="src\source\models\ObjectNode.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\source\models\ObjectTree.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\source\models\TreeIterator.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\source\audio\Music.cpp">
       <Filter>Source Files\audio</Filter>
     </ClCompile>
-    <ClCompile Include="Sound.cpp">
+    <ClCompile Include="src\source\audio\Sound.cpp">
       <Filter>Source Files\audio</Filter>
     </ClCompile>
-    <ClCompile Include="EventQuit.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="src\source\utility\Clock.cpp">
+      <Filter>Source Files\utility</Filter>
     </ClCompile>
-    <ClCompile Include="TreeIterator.cpp">
-      <Filter>Source Files\models</Filter>
+    <ClCompile Include="src\source\utility\Input.cpp">
+      <Filter>Source Files\utility</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
+    <ClCompile Include="src\source\utility\utility.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\source\sprite\Shape.cpp">
       <Filter>Source Files\sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Shape.cpp">
+    <ClCompile Include="src\source\sprite\Sprite.cpp">
       <Filter>Source Files\sprite</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectTree.cpp">
-      <Filter>Source Files\models</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectNode.cpp">
+    <ClCompile Include="src\include\WorldState.cpp">
       <Filter>Source Files\models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameManager.h">
-      <Filter>Header Files\managers</Filter>
+    <ClInclude Include="src\include\Event.h">
+      <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsManager.h">
-      <Filter>Header Files\managers</Filter>
+    <ClInclude Include="src\include\EventCollision.h">
+      <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Header Files\managers</Filter>
+    <ClInclude Include="src\include\EventJoystick.h">
+      <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="LogManager.h">
-      <Filter>Header Files\managers</Filter>
+    <ClInclude Include="src\include\EventKeyboard.h">
+      <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="Manager.h">
-      <Filter>Header Files\managers</Filter>
+    <ClInclude Include="src\include\EventMouse.h">
+      <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="WorldManager.h">
-      <Filter>Header Files\managers</Filter>
+    <ClInclude Include="src\include\EventQuit.h">
+      <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files\managers</Filter>
+    <ClInclude Include="src\include\EventStep.h">
+      <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
-    <ClInclude Include="utility.h">
+    <ClInclude Include="src\include\Clock.h">
       <Filter>Header Files\utility</Filter>
     </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="src\include\Frame.h">
+      <Filter>Header Files\sprite</Filter>
     </ClInclude>
-    <ClInclude Include="EventBeforeDraw.h">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="src\include\GameManager.h">
+      <Filter>Header Files\managers</Filter>
     </ClInclude>
-    <ClInclude Include="EventCollision.h">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="src\include\GraphicsManager.h">
+      <Filter>Header Files\managers</Filter>
     </ClInclude>
-    <ClInclude Include="EventJoystick.h">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="src\include\InputManager.h">
+      <Filter>Header Files\managers</Filter>
     </ClInclude>
-    <ClInclude Include="EventKeyboard.h">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="src\include\LogManager.h">
+      <Filter>Header Files\managers</Filter>
     </ClInclude>
-    <ClInclude Include="EventMouse.h">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="src\include\Manager.h">
+      <Filter>Header Files\managers</Filter>
     </ClInclude>
-    <ClInclude Include="EventStep.h">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="src\include\ResourceManager.h">
+      <Filter>Header Files\managers</Filter>
     </ClInclude>
-    <ClInclude Include="Clock.h">
-      <Filter>Header Files\utility</Filter>
+    <ClInclude Include="src\include\WorldManager.h">
+      <Filter>Header Files\managers</Filter>
     </ClInclude>
-    <ClInclude Include="WorldState.h">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Header Files\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Music.h">
+    <ClInclude Include="src\include\Music.h">
       <Filter>Header Files\audio</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
+    <ClInclude Include="src\include\Input.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Shape.h">
+      <Filter>Header Files\sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Sound.h">
       <Filter>Header Files\audio</Filter>
     </ClInclude>
-    <ClInclude Include="EventQuit.h">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="src\include\Sprite.h">
+      <Filter>Header Files\sprite</Filter>
     </ClInclude>
-    <ClInclude Include="TreeIterator.h">
+    <ClInclude Include="src\include\utility.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\WorldState.h">
       <Filter>Header Files\models</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Header Files\sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Shape.h">
-      <Filter>Header Files\sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Frame.h">
-      <Filter>Header Files\sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectNode.h">
+    <ClInclude Include="src\include\Object.h">
       <Filter>Header Files\models</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectTree.h">
+    <ClInclude Include="src\include\ObjectNode.h">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\ObjectTree.h">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\TreeIterator.h">
       <Filter>Header Files\models</Filter>
     </ClInclude>
   </ItemGroup>

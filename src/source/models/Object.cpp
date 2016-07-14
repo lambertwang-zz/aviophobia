@@ -6,7 +6,6 @@
 #include <math.h>
 
 // Dragonfly headers
-#include "EventBeforeDraw.h"
 #include "EventJoystick.h"
 #include "EventKeyboard.h"
 #include "EventMouse.h"
@@ -199,9 +198,7 @@ int av::Object::registerInterest(std::string event_type) {
         return -1;
     }
 
-    if (event_type.compare(av::BEFOREDRAW_EVENT) == 0) {
-        av::GameManager::getInstance().registerInterest(this, event_type);
-    } else if (event_type.compare(av::STEP_EVENT) == 0) {
+    if (event_type.compare(av::STEP_EVENT) == 0) {
         av::GameManager::getInstance().registerInterest(this, event_type);
     } else if (event_type.compare(av::MOUSE_EVENT) == 0) {
         av::InputManager::getInstance().registerInterest(this, event_type);
@@ -238,9 +235,7 @@ int av::Object::unregisterInterest(std::string event_type) {
         return -1;
     }
 
-    if (event_type.compare(av::BEFOREDRAW_EVENT) == 0) {
-        av::GameManager::getInstance().unregisterInterest(this, event_type);
-    } else if (event_type.compare(av::STEP_EVENT) == 0) {
+    if (event_type.compare(av::STEP_EVENT) == 0) {
         av::GameManager::getInstance().unregisterInterest(this, event_type);
     } else if (event_type.compare(av::MOUSE_EVENT) == 0) {
         av::InputManager::getInstance().unregisterInterest(this, event_type);

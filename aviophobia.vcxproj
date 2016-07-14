@@ -18,6 +18,63 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\include\WorldState.cpp" />
+    <ClCompile Include="src\source\utility\Clock.cpp" />
+    <ClCompile Include="src\source\events\Event.cpp" />
+    <ClCompile Include="src\source\events\EventCollision.cpp" />
+    <ClCompile Include="src\source\events\EventJoystick.cpp" />
+    <ClCompile Include="src\source\events\EventKeyboard.cpp" />
+    <ClCompile Include="src\source\events\EventMouse.cpp" />
+    <ClCompile Include="src\source\events\EventQuit.cpp" />
+    <ClCompile Include="src\source\events\EventStep.cpp" />
+    <ClCompile Include="src\source\managers\GameManager.cpp" />
+    <ClCompile Include="src\source\managers\GraphicsManager.cpp" />
+    <ClCompile Include="src\source\utility\Input.cpp" />
+    <ClCompile Include="src\source\managers\InputManager.cpp" />
+    <ClCompile Include="src\source\managers\LogManager.cpp" />
+    <ClCompile Include="src\source\managers\Manager.cpp" />
+    <ClCompile Include="src\source\audio\Music.cpp" />
+    <ClCompile Include="src\source\models\Object.cpp" />
+    <ClCompile Include="src\source\models\ObjectNode.cpp" />
+    <ClCompile Include="src\source\models\ObjectTree.cpp" />
+    <ClCompile Include="src\source\managers\ResourceManager.cpp" />
+    <ClCompile Include="src\source\sprite\Shape.cpp" />
+    <ClCompile Include="src\source\audio\Sound.cpp" />
+    <ClCompile Include="src\source\sprite\Sprite.cpp" />
+    <ClCompile Include="src\source\models\TreeIterator.cpp" />
+    <ClCompile Include="src\source\utility\utility.cpp" />
+    <ClCompile Include="src\source\managers\WorldManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\include\Clock.h" />
+    <ClInclude Include="src\include\Event.h" />
+    <ClInclude Include="src\include\EventCollision.h" />
+    <ClInclude Include="src\include\EventJoystick.h" />
+    <ClInclude Include="src\include\EventKeyboard.h" />
+    <ClInclude Include="src\include\EventMouse.h" />
+    <ClInclude Include="src\include\EventQuit.h" />
+    <ClInclude Include="src\include\EventStep.h" />
+    <ClInclude Include="src\include\Frame.h" />
+    <ClInclude Include="src\include\GameManager.h" />
+    <ClInclude Include="src\include\GraphicsManager.h" />
+    <ClInclude Include="src\include\Input.h" />
+    <ClInclude Include="src\include\InputManager.h" />
+    <ClInclude Include="src\include\LogManager.h" />
+    <ClInclude Include="src\include\Manager.h" />
+    <ClInclude Include="src\include\Music.h" />
+    <ClInclude Include="src\include\Object.h" />
+    <ClInclude Include="src\include\ObjectNode.h" />
+    <ClInclude Include="src\include\ObjectTree.h" />
+    <ClInclude Include="src\include\ResourceManager.h" />
+    <ClInclude Include="src\include\Shape.h" />
+    <ClInclude Include="src\include\Sound.h" />
+    <ClInclude Include="src\include\Sprite.h" />
+    <ClInclude Include="src\include\TreeIterator.h" />
+    <ClInclude Include="src\include\utility.h" />
+    <ClInclude Include="src\include\WorldManager.h" />
+    <ClInclude Include="src\include\WorldState.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D7978EC9-4EE3-4CC7-8BE4-6C82F9FCA840}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -63,7 +120,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\t-lawang\Documents\git\libraries\SDL2-2.0.4\include;C:\Users\t-lawang\Documents\git\libraries\glew-1.13.0\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\t-lawang\Documents\git\libraries\glew-1.13.0\include;C:\Users\t-lawang\Documents\git\libraries\SDL2-2.0.4\include;$(MSBuildProjectDirectory)\src\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\t-lawang\Documents\git\libraries\SDL2-2.0.4\lib\x86;C:\Users\t-lawang\Documents\git\libraries\glew-1.13.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -98,64 +155,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Clock.cpp" />
-    <ClCompile Include="Event.cpp" />
-    <ClCompile Include="EventBeforeDraw.cpp" />
-    <ClCompile Include="EventCollision.cpp" />
-    <ClCompile Include="EventJoystick.cpp" />
-    <ClCompile Include="EventKeyboard.cpp" />
-    <ClCompile Include="EventMouse.cpp" />
-    <ClCompile Include="EventQuit.cpp" />
-    <ClCompile Include="EventStep.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GraphicsManager.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="LogManager.cpp" />
-    <ClCompile Include="Manager.cpp" />
-    <ClCompile Include="Music.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="ObjectNode.cpp" />
-    <ClCompile Include="ObjectTree.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="Shape.cpp" />
-    <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="TreeIterator.cpp" />
-    <ClCompile Include="utility.cpp" />
-    <ClCompile Include="WorldManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Clock.h" />
-    <ClInclude Include="Event.h" />
-    <ClInclude Include="EventBeforeDraw.h" />
-    <ClInclude Include="EventCollision.h" />
-    <ClInclude Include="EventJoystick.h" />
-    <ClInclude Include="EventKeyboard.h" />
-    <ClInclude Include="EventMouse.h" />
-    <ClInclude Include="EventStep.h" />
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GraphicsManager.h" />
-    <ClInclude Include="EventQuit.h" />
-    <ClInclude Include="Frame.h" />
-    <ClInclude Include="ObjectNode.h" />
-    <ClInclude Include="ObjectTree.h" />
-    <ClInclude Include="Shape.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="TreeIterator.h" />
-    <ClInclude Include="WorldState.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="LogManager.h" />
-    <ClInclude Include="Manager.h" />
-    <ClInclude Include="Music.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="Sound.h" />
-    <ClInclude Include="utility.h" />
-    <ClInclude Include="WorldManager.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

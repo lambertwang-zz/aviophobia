@@ -38,6 +38,9 @@ namespace av {
         // Copy operator
         ObjectNode(const ObjectNode *other);
 
+        // Calls FreeTree on deletion
+        ~ObjectNode();
+
         // Frees the memory allocated for this list
         void freeTree();
 

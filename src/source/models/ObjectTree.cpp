@@ -7,12 +7,16 @@
 
 void av::ObjectTree::copyFrom(const ObjectTree *to_copy) {
     this->freeTree();
-    this->p_root = new ObjectNode(to_copy->getRoot());
+    if (to_copy) {
+        if (to_copy->getRoot()) {
+            this->p_root = new ObjectNode(to_copy->getRoot());
+        }
+    }
 }
 
 void av::ObjectTree::freeTree() {
     if (this->p_root) {
-        this->p_root->freeTree();
+        delete this->p_root;
     }
     this->p_root = nullptr;
     this->count = 0;
@@ -221,6 +225,8 @@ av::ObjectTree::ObjectTree() {
 }
 
 av::ObjectTree::ObjectTree(const ObjectTree *other) {
+    this->p_root = nullptr;
+    this->count = 0;
     this->copyFrom(other);
 }
 

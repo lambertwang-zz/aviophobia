@@ -1,12 +1,7 @@
 
-
-// SDL/GL headers
-#include <GL/glew.h>
-
 // aviophobia headers
 #include "LogManager.h"
 #include "Shape.h"
-
 
 av::Shape::Shape() {
     this->shape_initialized = false;

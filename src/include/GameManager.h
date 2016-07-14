@@ -11,13 +11,17 @@
 // standard headers
 #include <functional>
 
+// SDL headers
+#include <SDL_thread.h>
+
 // aviophobia headers
 #include "Manager.h"
+#include "WorldState.h"
 
 namespace av {
 
-    // Frame time in microseconds for ~60fps
-    const int DEFAULT_FRAME_TIME = 15;
+    // Tick time in microseconds for 128tps
+    const int DEFAULT_FRAME_TIME = 7760;
 
     class GameManager : public Manager {
     private:
@@ -54,8 +58,21 @@ namespace av {
         // Virtual function from av::Manager
         bool isValid(std::string event_name) const;
         
-        // Runs the game loop
+        // Runs the game
         void run();
+
+        static WorldState game_state;
+        static WorldState render_state;
+        static SDL_mutex *m_game_state;
+        static SDL_mutex *m_render_state;
+        static SDL_cond *c_game_state;
+        static SDL_cond *c_render_state;
+
+        // Swaps worldState when 
+        static int swapStates(void *data);
+
+        // Simulates all game events and logic
+        void gameLoop();
 
         // Sets the game over status
         void setGameOver(bool new_game_over=true);

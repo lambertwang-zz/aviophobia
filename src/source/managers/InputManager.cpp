@@ -36,9 +36,6 @@ int av::InputManager::startUp() {
         // Set member parameters
         this->setType("INPUT_MANAGER");
 
-        // Enable text input
-        SDL_StartTextInput();
-
         log_manager.writeLog(2, "av::InputManager::startUp(): InputManager started.");
         return 0;
     }
@@ -48,9 +45,6 @@ int av::InputManager::startUp() {
 
 void av::InputManager::shutDown() {
     if (this->isStarted()) {
-        // re-enable key repeat
-        av::GraphicsManager &graphics_manager = av::GraphicsManager::getInstance();
-
         av::LogManager &log_manager = av::LogManager::getInstance();
         log_manager.writeLog(2, "av::InputManager::shutDown(): Closing InputManager");
 
@@ -62,8 +56,13 @@ void av::InputManager::getInput() {
     // Get joysticks
     this->joystick_count = 0;
 
+    SDL_LockMutex(av::GraphicsManager::m_eventBuffer);
+
+    int i;
     SDL_Event ev;
-    while (SDL_PollEvent(&ev)) {
+
+    for (i = 0; i < av::GraphicsManager::eventCount; i++) {
+        ev = av::GraphicsManager::eventBuffer[i];
         if (ev.type == SDL_QUIT) {
             av::EventQuit e_q = av::EventQuit();
             onEvent(&e_q);
@@ -80,6 +79,8 @@ void av::InputManager::getInput() {
             continue;
         }
     }
+
+    SDL_UnlockMutex(av::GraphicsManager::m_eventBuffer);
 }
 
 bool av::InputManager::isValid(std::string event_name) const {

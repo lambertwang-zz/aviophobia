@@ -10,6 +10,8 @@
 
 namespace av {
 
+const int EVENT_BUFFER_SIZE = 1024;
+
 // Default settings for window
 const int DEFAULT_WINDOW_WIDTH = 800;
 const int DEFAULT_WINDOW_HEIGHT = 600;
@@ -40,6 +42,24 @@ const std::string WINDOW_TITLE_DEFAULT = "aviophobia";
         int width;
         // Height of the window in pixels
         int height;
+
+        bool fullscreen;
+        std::string window_name;
+
+        // Initialize the window and rendering pipeline
+        int setupRendering();
+
+        // Destroy the SDL window and context
+        void teardownRendering();
+
+        void pollEvents();
+
+        // Draws all objects in view bottom up from altitude 0 to MAX_ALTITUDE
+        void draw();
+
+        // Render the current window buffer
+        // Returns 0 if successful, -1 otherwise
+        int swapBuffers();
     public:
         // Manages deletion of GraphicsManager
         ~GraphicsManager();
@@ -47,14 +67,18 @@ const std::string WINDOW_TITLE_DEFAULT = "aviophobia";
         // Get the instance of the singleton
         static GraphicsManager &getInstance();
 
+        static SDL_Event *eventBuffer;
+        static int eventCount;
+        static SDL_mutex *m_eventBuffer;
+
         // Starts the GraphicsManager with default parameters
         int startUp();
         // Starts the GraphicsManager
         int startUp(
             int init_horizontal, 
             int init_vertical, 
-            bool fullscreen,
-            std::string window_name
+            bool new_fullscreen,
+            std::string new_window_name
         );
 
         // Shut down GraphicsManager
@@ -65,9 +89,8 @@ const std::string WINDOW_TITLE_DEFAULT = "aviophobia";
         // Returns the height of the window in pixels
         int getHeight() const;
 
-        // Render the current window buffer
-        // Returns 0 if successful, -1 otherwise
-        int swapBuffers();
+        // Renders the world state
+        static int renderLoop(void *data);
 
         // Renders a triangle
         void drawTriangle();

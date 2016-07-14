@@ -9,9 +9,13 @@ void av::ObjectNode::copyFrom(const av::ObjectNode *to_copy) {
     av::ObjectNode *new_left = to_copy->getLeft(), *new_right = to_copy->getRight();
     if (new_left) {
         this->left = new av::ObjectNode(new_left);
+    } else {
+        this->left = nullptr;
     }
     if (new_right) {
         this->right = new av::ObjectNode(new_right);
+    } else {
+        this->left = nullptr;
     }
 }
 
@@ -29,6 +33,10 @@ av::ObjectNode::ObjectNode(const ObjectNode *other) {
     }
 }
 
+av::ObjectNode::~ObjectNode() {
+    this->freeTree();
+}
+
 void av::ObjectNode::freeTree() {
     if (this->left) {
         delete this->left;
@@ -38,7 +46,6 @@ void av::ObjectNode::freeTree() {
         delete this->right;
         this->right = nullptr;
     }
-    delete this;
 }
 
 av::Object *av::ObjectNode::getObj() const {

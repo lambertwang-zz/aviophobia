@@ -3,7 +3,6 @@
  */
 
 // aviophobia headers
-#include "EventBeforeDraw.h"
 #include "EventCollision.h"
 #include "EventJoystick.h"
 #include "EventKeyboard.h"
@@ -127,17 +126,6 @@ void av::WorldManager::update() {
     }
 }
 
-void av::WorldManager::draw() {
-    // Iterate through the object list 5 times, once for each altitude layer
-    av::TreeIterator li(&this->updates);
-    for (int i = 0; i <= MAX_ALTITUDE; i++) {
-        for (li.first(); !li.isDone(); li.next()) {
-            av::Object *p_o = li.currentObject();
-            // Only draw objects in view
-        }
-    }
-}
-
 int av::WorldManager::markForDelete(av::Object *p_o) {
     // ObjectList::insert will not add duplicate objects
     this->updates.remove(p_o);
@@ -218,9 +206,6 @@ bool av::WorldManager::isValid(std::string event_name) const {
         return false;
     }
     if (event_name.compare(av::JOYSTICK_EVENT) == 0) {
-        return false;
-    }
-    if (event_name.compare(av::BEFOREDRAW_EVENT) == 0) {
         return false;
     }
     return true;
