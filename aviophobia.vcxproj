@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\include\WorldState.cpp" />
+    <ClCompile Include="src\source\utility\Clock.cpp" />
+    <ClCompile Include="src\source\events\Event.cpp" />
+    <ClCompile Include="src\source\events\EventCollision.cpp" />
+    <ClCompile Include="src\source\events\EventJoystick.cpp" />
+    <ClCompile Include="src\source\events\EventKeyboard.cpp" />
+    <ClCompile Include="src\source\events\EventMouse.cpp" />
+    <ClCompile Include="src\source\events\EventQuit.cpp" />
+    <ClCompile Include="src\source\events\EventStep.cpp" />
+    <ClCompile Include="src\source\managers\GameManager.cpp" />
+    <ClCompile Include="src\source\managers\GraphicsManager.cpp" />
+    <ClCompile Include="src\source\utility\Input.cpp" />
+    <ClCompile Include="src\source\managers\InputManager.cpp" />
+    <ClCompile Include="src\source\managers\LogManager.cpp" />
+    <ClCompile Include="src\source\managers\Manager.cpp" />
+    <ClCompile Include="src\source\audio\Music.cpp" />
+    <ClCompile Include="src\source\models\Object.cpp" />
+    <ClCompile Include="src\source\models\ObjectNode.cpp" />
+    <ClCompile Include="src\source\models\ObjectTree.cpp" />
+    <ClCompile Include="src\source\managers\ResourceManager.cpp" />
+    <ClCompile Include="src\source\sprite\Shape.cpp" />
+    <ClCompile Include="src\source\audio\Sound.cpp" />
+    <ClCompile Include="src\source\sprite\Sprite.cpp" />
+    <ClCompile Include="src\source\models\TreeIterator.cpp" />
+    <ClCompile Include="src\source\utility\utility.cpp" />
+    <ClCompile Include="src\source\managers\WorldManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\include\Clock.h" />
+    <ClInclude Include="src\include\Event.h" />
+    <ClInclude Include="src\include\EventCollision.h" />
+    <ClInclude Include="src\include\EventJoystick.h" />
+    <ClInclude Include="src\include\EventKeyboard.h" />
+    <ClInclude Include="src\include\EventMouse.h" />
+    <ClInclude Include="src\include\EventQuit.h" />
+    <ClInclude Include="src\include\EventStep.h" />
+    <ClInclude Include="src\include\Frame.h" />
+    <ClInclude Include="src\include\GameManager.h" />
+    <ClInclude Include="src\include\GraphicsManager.h" />
+    <ClInclude Include="src\include\Input.h" />
+    <ClInclude Include="src\include\InputManager.h" />
+    <ClInclude Include="src\include\LogManager.h" />
+    <ClInclude Include="src\include\Manager.h" />
+    <ClInclude Include="src\include\Music.h" />
+    <ClInclude Include="src\include\Object.h" />
+    <ClInclude Include="src\include\ObjectNode.h" />
+    <ClInclude Include="src\include\ObjectTree.h" />
+    <ClInclude Include="src\include\ResourceManager.h" />
+    <ClInclude Include="src\include\Shape.h" />
+    <ClInclude Include="src\include\Sound.h" />
+    <ClInclude Include="src\include\Sprite.h" />
+    <ClInclude Include="src\include\TreeIterator.h" />
+    <ClInclude Include="src\include\utility.h" />
+    <ClInclude Include="src\include\WorldManager.h" />
+    <ClInclude Include="src\include\WorldState.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D7978EC9-4EE3-4CC7-8BE4-6C82F9FCA840}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\t-lawang\Documents\git\libraries\glew-1.13.0\include;C:\Users\t-lawang\Documents\git\libraries\SDL2-2.0.4\include;$(MSBuildProjectDirectory)\src\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\t-lawang\Documents\git\libraries\SDL2-2.0.4\lib\x86;C:\Users\t-lawang\Documents\git\libraries\glew-1.13.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
