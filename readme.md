@@ -19,12 +19,15 @@ Loosely based on the Dragonfly engine by Mark Claypool (claypool@wpi.edu)
 Rather than using images for sprites, sprites are 3D vector graphics formed from polygons.
 
 ## Build instructions
-Requirements: [```SDL2```](http://libsdl.org/), [```GLEW```](http://glew.sourceforge.net/)
+Requirements: [```SDL2```](http://libsdl.org/), [```GLEW```](http://glew.sourceforge.net/)  
 #### Linux
-1. TBD (probably make)
+1. TBD (probably make)  
+
 #### Windows
-Install required libraries (either systemwide or in local directory)
+Install required libraries (either systemwide or in local directory)  
+
 ##### mingw
-1. ```make``` (or ```mingw32-make```)
+1. ```make``` (or ```mingw32-make```)  
+
 ##### Visual Studio
-1. TBD
+1. TBD  
