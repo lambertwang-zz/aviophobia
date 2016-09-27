@@ -164,7 +164,7 @@ int av::Object::getAltitude() const{
 }
 
 // virtual function
-int av::Object::eventHandler(const av::Event *p_e) {
+int av::Object::eventHandler(const av::Event *) {
     return 0;
 }
 

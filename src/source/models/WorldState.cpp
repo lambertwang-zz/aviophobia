@@ -14,11 +14,11 @@ void av::WorldState::copyObjects(const ObjectTree * new_objects) {
     this->objects.copyFrom(new_objects);
 }
 
-void av::WorldState::copy(const WorldState new_state) {
-    this->copyObjects(&new_state.getObjects());
+void av::WorldState::copy(WorldState new_state) {
+    this->copyObjects(new_state.getObjects());
 }
 
 
-av::ObjectTree av::WorldState::getObjects() const {
-    return this->objects;
+av::ObjectTree *av::WorldState::getObjects() {
+    return &(this->objects);
 }

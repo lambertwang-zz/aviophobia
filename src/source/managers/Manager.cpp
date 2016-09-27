@@ -41,6 +41,9 @@ void av::Manager::shutDown() {
 }
 
 int av::Manager::onEvent(const av::Event *p_event) const {
+    av::LogManager &log_manager = av::LogManager::getInstance();
+    log_manager.writeLog("av::Manager::onEvent(): Sending event \"%s\" to all objects.", p_event->getType().c_str());
+
     av::GameManager &game_manager = av::GameManager::getInstance();
     game_manager.handleGlobalEvent(p_event);
 

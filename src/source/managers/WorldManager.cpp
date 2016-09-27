@@ -33,7 +33,7 @@ int av::WorldManager::startUp() {
         this->updates = av::ObjectTree();
         this->deletions = av::ObjectTree();
 
-        av::GraphicsManager &graphics_manager = av::GraphicsManager::getInstance();
+        // av::GraphicsManager &graphics_manager = av::GraphicsManager::getInstance();
         this->p_view_following = NULL;
 
         av::LogManager &log_manager = av::LogManager::getInstance();
@@ -101,6 +101,9 @@ av::ObjectTree av::WorldManager::getAllObjects(void) const {
 
 
 void av::WorldManager::update() {
+    av::LogManager &log_manager = av::LogManager::getInstance();
+    log_manager.writeLog("av::WorldManager::update(): Updating world state.");
+
     // Calculate movement
     av::TreeIterator move_i(&this->updates);
     for (move_i.first(); !move_i.isDone(); move_i.next()) {

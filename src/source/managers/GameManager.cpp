@@ -52,6 +52,9 @@ int av::GameManager::startUp() {
         this->frame_time = av::DEFAULT_FRAME_TIME;
         this->step_count = 0;
 
+        // Set global event handler to null
+        this->globalEventHandler = NULL;
+
         // Required for windows
 #if defined _WIN32 || defined _WIN64
         timeBeginPeriod(1);
@@ -123,8 +126,8 @@ void av::GameManager::run() {
         SDL_Thread* renderingThreadId = SDL_CreateThread(
             &av::GraphicsManager::renderLoop, 
             "RenderingThread", 
-            NULL);
-            
+            NULL);    
+        
         this->gameLoop();
 
         SDL_WaitThread(renderingThreadId, NULL);
@@ -183,6 +186,7 @@ void av::GameManager::gameLoop() {
         SDL_LockMutex(m_game_state);
 
         // Send EVENT_STEP to all objects
+        log_manager.writeLog("av::GameManager::run(): Sending step event.");
         av::EventStep p_step_event = av::EventStep(this->step_count);
         onEvent(&p_step_event);
 
@@ -197,6 +201,7 @@ void av::GameManager::gameLoop() {
         SDL_CondSignal(c_game_state);
 
         // Adjust sleep time for additional framerate accuracy
+        log_manager.writeLog("av::GameManager::run(): Calculating frame timing.");
         int loop_time = clock.delta();
         // Reset clock before sleeping to calculate actual sleep time
         // clock.delta();
@@ -239,7 +244,8 @@ void av::GameManager::setGlobalEventHandler(std::function<void(const Event *)> n
 }
 
 void av::GameManager::handleGlobalEvent(const av::Event * p_event) {
-    this->globalEventHandler(p_event);
+    if (this->globalEventHandler != NULL)
+        this->globalEventHandler(p_event);
 }
 
 bool av::GameManager::isValid(std::string event_name) const {

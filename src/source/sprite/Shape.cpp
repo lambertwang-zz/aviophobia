@@ -125,28 +125,28 @@ int av::Shape::render() {
     if (!this->shape_initialized) {
         return -1;
     }
-    //Clear color buffer
+    // Clear color buffer
     glClear(GL_COLOR_BUFFER_BIT);
 
-    //Bind program
+    // Bind program
     glUseProgram(this->programId);
 
-    //Enable vertex position
+    // Enable vertex position
     glEnableVertexAttribArray(this->vertexAttribLoc);
 
-    //Set vertex data
+    // Set vertex data
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
     glVertexAttribPointer(this->vertexAttribLoc, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL);
 
-    //Set index data and render
+    // Set index data and render
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
     glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL);
 
-    //Disable vertex position
+    // Disable vertex position
     glDisableVertexAttribArray(this->vertexAttribLoc);
 
-    //Unbind program
-    glUseProgram(NULL);
+    // Unbind program
+    glUseProgram(0);
 
     return 1;
 }

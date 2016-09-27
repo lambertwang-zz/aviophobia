@@ -27,9 +27,9 @@ namespace av {
         // Copies an object tree into this state
         void copyObjects(const ObjectTree *new_objects);
 
-        void copy(const WorldState new_state);
+        void copy(WorldState new_state);
 
-        ObjectTree getObjects() const;
+        ObjectTree *getObjects();
     };
 } // End of namespace
 

@@ -18,7 +18,7 @@
 #error "unknown platform"
 #endif
 
-// Dragonfly headers
+// Aviophobia headers
 #include "utility.h"
 
 #if defined _WIN32 || defined _WIN64

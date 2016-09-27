@@ -12,6 +12,9 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+// SDL headers
+#include <SDL_thread.h>
+
 // aviophobia headers
 #include "Manager.h"
 
@@ -67,6 +70,8 @@ const std::string LOGFILE_NAME = "aviophobia.log";
         // Write to logfile. Supports printf() formatting of strings
         // Returns number of bytes written. -1 if error
         int writeLog(int log_level, const char *fmt, ...);
+
+        static SDL_mutex *m_log_manager;
     };
 } // End of namespace
 

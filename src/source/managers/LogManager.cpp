@@ -10,6 +10,8 @@
 #include "GameManager.h"
 #include "utility.h"
 
+SDL_mutex *av::LogManager::m_log_manager = SDL_CreateMutex();
+
 av::LogManager::LogManager() {
 }
 
@@ -50,6 +52,7 @@ int av::LogManager::writeLog(const char *fmt, ...) {
 int av::LogManager::writeLog(int log_level, const char *fmt, ...) {
     if (log_level >= this->log_level) {
         if (this->p_f && this->isStarted()) {
+            SDL_LockMutex(av::LogManager::m_log_manager);
             // Print timestring and frame number to log file
             av::GameManager &game_manager = av::GameManager::getInstance();
             fprintf(p_f, "%8s  %6d  ", av::getTimeString(), game_manager.getStepCount());
@@ -68,6 +71,7 @@ int av::LogManager::writeLog(int log_level, const char *fmt, ...) {
                 fflush(p_f);
             }
 
+            SDL_LockMutex(av::LogManager::m_log_manager);
             return chars_printed;
         }
     }

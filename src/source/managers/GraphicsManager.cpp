@@ -191,7 +191,7 @@ void av::GraphicsManager::pollEvents() {
 }
 
 void av::GraphicsManager::draw() {
-    TreeIterator ti = TreeIterator(&av::GameManager::render_state.getObjects());
+    TreeIterator ti = TreeIterator(av::GameManager::render_state.getObjects());
     for (ti.first(); !ti.isDone(); ti.next()) {
         av::Object *p_o = ti.currentObject();
         // Only draw objects in view

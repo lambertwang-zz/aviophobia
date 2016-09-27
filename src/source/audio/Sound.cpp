@@ -25,7 +25,7 @@ std::string av::Sound::getLabel() const {
     return this->label;
 }
 
-void av::Sound::play(bool loop) {
+void av::Sound::play(bool) {
 }
 
 void av::Sound::stop() {

@@ -53,6 +53,8 @@ void av::InputManager::shutDown() {
 }
 
 void av::InputManager::getInput() {
+    av::LogManager &log_manager = av::LogManager::getInstance();
+    log_manager.writeLog("av::InputManager::getInput(): Retrieving input.");
     // Get joysticks
     this->joystick_count = 0;
 
