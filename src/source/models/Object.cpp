@@ -51,7 +51,10 @@ av::Object::~Object() {
     world_manager.removeObject(this);
     
     while (this->event_count > 0) {
-        av::LogManager::getInstance().writeLog(0, "av::Object::~Object(): %s", this->event_name[0].c_str());
+        av::LogManager::getInstance().writeLog(
+            LOG_OBJECT, 
+            "av::Object::~Object(): %s", 
+            this->event_name[0].c_str());
         this->unregisterInterest(this->event_name[0]);
     }
 }
@@ -214,7 +217,10 @@ int av::Object::registerInterest(std::string event_type) {
     this->event_count++;
 
     av::LogManager &log_manager = av::LogManager::getInstance();
-    log_manager.writeLog("av::Object::registerInterest(): Successfully registered interest for event type %s", event_type.c_str());
+    log_manager.writeLog(
+        LOG_OBJECT | LOG_EVENT, 
+        "av::Object::registerInterest(): Successfully registered interest for event type %s", 
+        event_type.c_str());
 
     return 0;
 }
@@ -248,6 +254,9 @@ int av::Object::unregisterInterest(std::string event_type) {
     }
 
     av::LogManager &log_manager = av::LogManager::getInstance();
-    log_manager.writeLog("av::Object::unregisterInterest(): Successfully unregistered interest for event type %s", event_type.c_str());
+    log_manager.writeLog(
+        LOG_OBJECT | LOG_EVENT,
+        "av::Object::unregisterInterest(): Successfully unregistered interest for event type %s", 
+        event_type.c_str());
     return 0;
 }

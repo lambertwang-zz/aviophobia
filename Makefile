@@ -39,7 +39,7 @@ ENGINEFILES = $(ENGINESRC:.cpp=.o)
 ENGINE = aviophobia.a
 
 build: lib Makefile
-	@echo "done"
+	@echo done
 
 lib: $(ENGINEFILES)
 	ar rvs $(ENGINE) $(ENGINEFILES)
@@ -50,4 +50,4 @@ lib: $(ENGINEFILES)
 clean:
 	$(DELETE) $(ENGINE)
 	$(DELETE) /s $(subst /,\\, $(ENGINEFILES)) #Windows only
-	@echo "clean"
+	@echo clean

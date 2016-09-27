@@ -60,7 +60,7 @@ int av::GraphicsManager::startUp(int new_width, int new_height, bool new_fullscr
         this->fullscreen = new_fullscreen;
         this->window_name = new_window_name;
 
-        log_manager.writeLog(2, "av::GraphicsManager::startUp(): GraphicsManager started.");
+        log_manager.writeLog(LOG_STARTUP, "av::GraphicsManager::startUp(): GraphicsManager started.");
         return 0;
     }
     return -1;
@@ -69,7 +69,7 @@ int av::GraphicsManager::startUp(int new_width, int new_height, bool new_fullscr
 void av::GraphicsManager::shutDown() {
     if (this->isStarted()) {
         av::LogManager &log_manager = av::LogManager::getInstance();
-        log_manager.writeLog(2, "av::GraphicsManager::shutDown(): Closing GraphicsManager.");
+        log_manager.writeLog(LOG_STARTUP, "av::GraphicsManager::shutDown(): Closing GraphicsManager.");
         
         av::Manager::shutDown();
     }
@@ -116,7 +116,7 @@ int av::GraphicsManager::setupRendering() {
 
     // Set up sdl context
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        log_manager.writeLog("av::GraphicsManager::startUp(): SDL could not initialize. SDL_Error: %s\n", SDL_GetError());
+        log_manager.writeLog("av::GraphicsManager::setupRendering(): SDL could not initialize. SDL_Error: %s\n", SDL_GetError());
         return -2;
     }
 
@@ -146,7 +146,7 @@ int av::GraphicsManager::setupRendering() {
     this->context = SDL_GL_CreateContext(this->window);
 
     if (this->context == NULL) {
-        log_manager.writeLog("av::GraphicsManager::startUp(): SDL could not create GL context. SDL_Error: %s\n", SDL_GetError());
+        log_manager.writeLog("av::GraphicsManager::setupRendering(): SDL could not create GL context. SDL_Error: %s\n", SDL_GetError());
         return -2;
     }
 
@@ -154,20 +154,20 @@ int av::GraphicsManager::setupRendering() {
     glewExperimental = GL_TRUE;
     GLenum glewError = glewInit();
     if (glewError != GLEW_OK) {
-        log_manager.writeLog("av::GraphicsManager::startUp(): Unable to initialize GLEW. GLEW Error: %s\n", glewGetErrorString(glewError));
+        log_manager.writeLog("av::GraphicsManager::setupRendering(): Unable to initialize GLEW. GLEW Error: %s\n", glewGetErrorString(glewError));
         return -2;
     }
 
     // Enable Vsync
     if (SDL_GL_SetSwapInterval(1) < 0) {
-        log_manager.writeLog("av::GraphicsManager::startUp(): Unable to set VSync. SDL Error: %s\n", SDL_GetError());
+        log_manager.writeLog("av::GraphicsManager::setupRendering(): Unable to set VSync. SDL Error: %s\n", SDL_GetError());
         return -2;
     }
     
     // Get window surface
     this->surface = SDL_GetWindowSurface(this->window);
 
-    log_manager.writeLog("av::GraphicsManager::startUp(): GraphicsManager started.");
+    log_manager.writeLog(LOG_STARTUP, "av::GraphicsManager::setupRendering(): Rendering context set up.");
     return 0;
 }
 
@@ -194,13 +194,13 @@ void av::GraphicsManager::draw() {
     TreeIterator ti = TreeIterator(av::GameManager::render_state.getObjects());
     for (ti.first(); !ti.isDone(); ti.next()) {
         av::Object *p_o = ti.currentObject();
-        // Only draw objects in view
+        // TODO: Only draw objects in view
     }
 }
 
 int av::GraphicsManager::swapBuffers() {
-    Shape temp = Shape();
-    temp.render();
+    // Shape temp = Shape();
+    // temp.render();
 
     SDL_GL_SwapWindow(this->window);
     return 0;

@@ -37,7 +37,7 @@ int av::WorldManager::startUp() {
         this->p_view_following = NULL;
 
         av::LogManager &log_manager = av::LogManager::getInstance();
-        log_manager.writeLog(2, "av::WorldManager::startUp(): Starting WorldManager");
+        log_manager.writeLog(LOG_STARTUP, "av::WorldManager::startUp(): Starting WorldManager");
 
         return 0;
     }
@@ -57,14 +57,13 @@ void av::WorldManager::shutDown() {
             ti.first();
             while(!ti.isDone()) {
                 av::Object *p_o = ti.currentObject();
-                // log_manager.writeLog(0, "av::WorldManager::shutDown(): Deleting object of type");
-                log_manager.writeLog(0, "av::WorldManager::shutDown(): Deleting object of type %s", p_o->getType().c_str());
+                log_manager.writeLog(LOG_STARTUP, "av::WorldManager::shutDown(): Deleting object of type %s", p_o->getType().c_str());
                 delete p_o;
                 ti.next();
             }
         }
 
-        log_manager.writeLog(2, "av::WorldManager::shutDown(): Closing WorldManager");
+        log_manager.writeLog(LOG_STARTUP, "av::WorldManager::shutDown(): Closing WorldManager");
 
         av::Manager::shutDown();
     }
@@ -77,14 +76,20 @@ int av::WorldManager::setViewFollowing(av::Object *p_new_view_following) {
 
 int av::WorldManager::insertObject(Object *p_o) {
     av::LogManager &log_manager = av::LogManager::getInstance();
-    log_manager.writeLog(0, "av::WorldManager::insertObject(): Adding object to world id: %d", p_o->getId());
+    log_manager.writeLog(
+        LOG_OBJECT, 
+        "av::WorldManager::insertObject(): Adding object to world id: %d", 
+        p_o->getId());
 
     return this->updates.insert(p_o);
 }
 
 int av::WorldManager::removeObject(Object *p_o) {
     av::LogManager &log_manager = av::LogManager::getInstance();
-    log_manager.writeLog(0, "av::WorldManager::removeObject(): Removing object of type %s from world id: %d", p_o->getType().c_str(), p_o->getId());
+    log_manager.writeLog(
+        LOG_OBJECT, 
+        "av::WorldManager::removeObject(): Removing object of type %s from world id: %d", 
+        p_o->getType().c_str(), p_o->getId());
 
     // Check if removing the view followed object
     if (p_o == this->p_view_following) {
@@ -102,7 +107,7 @@ av::ObjectTree av::WorldManager::getAllObjects(void) const {
 
 void av::WorldManager::update() {
     av::LogManager &log_manager = av::LogManager::getInstance();
-    log_manager.writeLog("av::WorldManager::update(): Updating world state.");
+    log_manager.writeLog(LOG_GAME_TICK, "av::WorldManager::update(): Updating world state.");
 
     // Calculate movement
     av::TreeIterator move_i(&this->updates);
@@ -118,7 +123,7 @@ void av::WorldManager::update() {
     // Check if deletions is not empty
     if (!this->deletions.isEmpty()) {
         av::LogManager &log_manager = av::LogManager::getInstance();
-        log_manager.writeLog(0, "av::WorldManager::update(): Removing %d objects from the world", this->deletions.getCount());
+        log_manager.writeLog(LOG_OBJECT, "av::WorldManager::update(): Removing %d objects from the world", this->deletions.getCount());
         
         av::TreeIterator li(&this->deletions);
         for (li.first(); !li.isDone(); li.next()) {
@@ -167,7 +172,9 @@ int av::WorldManager::moveObject(av::Object *p_o) {
                 // av::EventCollision collision(p_o, p_temp_o);
 
                 av::LogManager &log_manager = av::LogManager::getInstance();
-                log_manager.writeLog(1, "av::WorldManager::moveObject(): Sending collision event, object id %d collided with object id %d", 
+                log_manager.writeLog(
+                    LOG_OBJECT, 
+                    "av::WorldManager::moveObject(): Sending collision event, object id %d collided with object id %d", 
                     p_o->getId(), p_temp_o->getId());
 
                 // p_o->eventHandler(&collision);

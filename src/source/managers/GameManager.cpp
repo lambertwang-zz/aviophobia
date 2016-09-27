@@ -52,8 +52,8 @@ int av::GameManager::startUp() {
         this->frame_time = av::DEFAULT_FRAME_TIME;
         this->step_count = 0;
 
-        // Set global event handler to null
-        this->globalEventHandler = NULL;
+        // Set default global event handler to null
+        this->setGlobalEventHandler(&(this->defaultGlobalEventHandler));
 
         // Required for windows
 #if defined _WIN32 || defined _WIN64
@@ -63,7 +63,7 @@ int av::GameManager::startUp() {
         // Startup log manager
         av::LogManager &log_manager = av::LogManager::getInstance();
         log_manager.startUp(2);
-        log_manager.writeLog(-1, "av::GameManager::startUp(): GameManager started.");
+        log_manager.writeLog(LOG_STARTUP, "av::GameManager::startUp(): GameManager started.");
 
         // Startup graphics manager
         av::GraphicsManager &graphics_manager = av::GraphicsManager::getInstance();
@@ -97,7 +97,7 @@ void av::GameManager::shutDown() {
 #endif
 
         av::LogManager &log_manager = av::LogManager::getInstance();
-        log_manager.writeLog(2, "av::GameManager::shutDown(): Closing GameManager");
+        log_manager.writeLog(LOG_STARTUP, "av::GameManager::shutDown(): Closing GameManager");
 
         // Shutdown managers now
         av::GraphicsManager &graphics_manager = av::GraphicsManager::getInstance();
@@ -134,7 +134,7 @@ void av::GameManager::run() {
         SDL_WaitThread(swapStateThreadId, NULL);
     } else {
         av::LogManager &log_manager = av::LogManager::getInstance();
-        log_manager.writeLog(2, "av::GameManager::run(): GameManager must be started before it can be run");
+        log_manager.writeLog("av::GameManager::run(): GameManager must be started before it can be run");
     }
 }
 
@@ -175,10 +175,11 @@ void av::GameManager::gameLoop() {
     av::WorldManager &world_manager = av::WorldManager::getInstance();
 
     while (!this->game_over) {
-        log_manager.writeLog("av::GameManager::run(): Starting loop step %d", this->step_count);
-
         // Reset clock
         clock.delta();
+
+        log_manager.writeLog(LOG_GAME_TICK, "av::GameManager::gameLoop(): Starting loop step %d", this->step_count);
+
         // Increment step count
         this->step_count++;
 
@@ -186,7 +187,6 @@ void av::GameManager::gameLoop() {
         SDL_LockMutex(m_game_state);
 
         // Send EVENT_STEP to all objects
-        log_manager.writeLog("av::GameManager::run(): Sending step event.");
         av::EventStep p_step_event = av::EventStep(this->step_count);
         onEvent(&p_step_event);
 
@@ -201,7 +201,6 @@ void av::GameManager::gameLoop() {
         SDL_CondSignal(c_game_state);
 
         // Adjust sleep time for additional framerate accuracy
-        log_manager.writeLog("av::GameManager::run(): Calculating frame timing.");
         int loop_time = clock.delta();
         // Reset clock before sleeping to calculate actual sleep time
         // clock.delta();
@@ -215,14 +214,15 @@ void av::GameManager::gameLoop() {
             adjust_time = 0;
         }
         log_manager.writeLog(
-            "av::GameManager::run(): Running. Steps: %d, Elapsed (us): %d, Sleep (us): %d, Adjust (us): %d", 
+            LOG_GAME_TICK,
+            "av::GameManager::gameLoop(): Running. Steps: %d, Elapsed (us): %d, Sleep (us): %d, Adjust (us): %d", 
             this->step_count, loop_time, sleep_time, adjust_time);
     }
 }
 
 void av::GameManager::setGameOver(bool new_game_over) {
     av::LogManager &log_manager = av::LogManager::getInstance();
-    log_manager.writeLog(2, "av::GameManager::setGameOver(): Setting game_over to %s", new_game_over ? "true" : "false");
+    log_manager.writeLog("av::GameManager::setGameOver(): Setting game_over to %s", new_game_over ? "true" : "false");
 
     this->game_over = new_game_over;
 }
@@ -244,8 +244,7 @@ void av::GameManager::setGlobalEventHandler(std::function<void(const Event *)> n
 }
 
 void av::GameManager::handleGlobalEvent(const av::Event * p_event) {
-    if (this->globalEventHandler != NULL)
-        this->globalEventHandler(p_event);
+    this->globalEventHandler(p_event);
 }
 
 bool av::GameManager::isValid(std::string event_name) const {
@@ -253,4 +252,8 @@ bool av::GameManager::isValid(std::string event_name) const {
         return true;
     }
     return false;
+}
+
+void av::GameManager::defaultGlobalEventHandler(const av::Event *p_event) {
+    return;
 }

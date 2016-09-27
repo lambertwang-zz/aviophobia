@@ -36,7 +36,7 @@ int av::InputManager::startUp() {
         // Set member parameters
         this->setType("INPUT_MANAGER");
 
-        log_manager.writeLog(2, "av::InputManager::startUp(): InputManager started.");
+        log_manager.writeLog(LOG_STARTUP, "av::InputManager::startUp(): InputManager started.");
         return 0;
     }
     return -1;
@@ -46,7 +46,7 @@ int av::InputManager::startUp() {
 void av::InputManager::shutDown() {
     if (this->isStarted()) {
         av::LogManager &log_manager = av::LogManager::getInstance();
-        log_manager.writeLog(2, "av::InputManager::shutDown(): Closing InputManager");
+        log_manager.writeLog(LOG_STARTUP, "av::InputManager::shutDown(): Closing InputManager");
 
         av::Manager::shutDown();
     }
@@ -54,7 +54,6 @@ void av::InputManager::shutDown() {
 
 void av::InputManager::getInput() {
     av::LogManager &log_manager = av::LogManager::getInstance();
-    log_manager.writeLog("av::InputManager::getInput(): Retrieving input.");
     // Get joysticks
     this->joystick_count = 0;
 
@@ -76,7 +75,7 @@ void av::InputManager::getInput() {
             continue;
         }
         if (ev.type == SDL_KEYUP) {
-            av::EventKeyboard e_k = av::EventKeyboard(ev.key.keysym.sym, av::KEY_DOWN);
+            av::EventKeyboard e_k = av::EventKeyboard(ev.key.keysym.sym, av::KEY_UP);
             onEvent(&e_k);
             continue;
         }

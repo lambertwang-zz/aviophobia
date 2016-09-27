@@ -43,14 +43,14 @@ int av::LogManager::writeLog(const char *fmt, ...) {
     va_end(args);
 
     // pass string through
-    int return_val = this->writeLog(INT_MAX, "%s", char_format);
+    int return_val = this->writeLog(LOG_ALL, "%s", char_format);
 
     return return_val;
 }
 
 // Returns number of characters including escape codes and excluding the timestring
-int av::LogManager::writeLog(int log_level, const char *fmt, ...) {
-    if (log_level >= this->log_level) {
+int av::LogManager::writeLog(unsigned char log_level, const char *fmt, ...) {
+    if (log_level & this->log_level > 0) {
         if (this->p_f && this->isStarted()) {
             SDL_LockMutex(av::LogManager::m_log_manager);
             // Print timestring and frame number to log file
@@ -78,12 +78,12 @@ int av::LogManager::writeLog(int log_level, const char *fmt, ...) {
     return -1;
 }
 
-void av::LogManager::setLogLevel(int log_level) {
+void av::LogManager::setLogLevel(unsigned char log_level) {
     this->log_level = log_level;
-    this->writeLog(2, "av::LogManager::setLogLevel(): Log level set to %d.", log_level);
+    this->writeLog(LOG_STARTUP, "av::LogManager::setLogLevel(): Log level set to %d.", log_level);
 }
 
-int av::LogManager::getLogLevel() const {
+unsigned char av::LogManager::getLogLevel() const {
     return this->log_level;
 }
 
@@ -93,10 +93,10 @@ av::LogManager::~LogManager() {
 }
 
 int av::LogManager::startUp() {
-    return this->startUp(INT_MAX);
+    return this->startUp(LOG_DEFAULT);
 }
 
-int av::LogManager::startUp(int log_level) {
+int av::LogManager::startUp(unsigned char log_level) {
     if (!this->isStarted()) {
         av::Manager::startUp();
         // Set member parameters
@@ -113,12 +113,12 @@ int av::LogManager::startUp(int log_level) {
         this->p_f = fopen(av::LOGFILE_NAME.c_str(), "w");
 #endif
         if (!this->p_f) {
-            this->writeLog(2, "av::LogManager::startUp(): Problem opening file %s", av::LOGFILE_NAME.c_str());
+            this->writeLog("av::LogManager::startUp(): Problem opening file %s", av::LOGFILE_NAME.c_str());
             av::Manager::shutDown();
             return -1;
         }
 
-        this->writeLog(2, "av::LogManager::startUp(): LogManager started.");
+        this->writeLog(LOG_STARTUP, "av::LogManager::startUp(): LogManager started.");
         return 0;
     }
     return -1;
@@ -126,10 +126,10 @@ int av::LogManager::startUp(int log_level) {
 
 void av::LogManager::shutDown() {
     if (this->isStarted()) {
-        this->writeLog(2, "av::LogManager::shutDown(): Closing LogManager");
+        this->writeLog(LOG_STARTUP, "av::LogManager::shutDown(): Closing LogManager");
         // Close dragonfly.log file if it is open
         if (this->p_f) {
-            this->writeLog(1, "av::LogManager::shutDown(): Closing %s", av::LOGFILE_NAME.c_str());
+            this->writeLog(LOG_STARTUP, "av::LogManager::shutDown(): Closing %s", av::LOGFILE_NAME.c_str());
             fclose(this->p_f);
         }
         av::Manager::shutDown();

@@ -42,7 +42,7 @@ void av::Manager::shutDown() {
 
 int av::Manager::onEvent(const av::Event *p_event) const {
     av::LogManager &log_manager = av::LogManager::getInstance();
-    log_manager.writeLog("av::Manager::onEvent(): Sending event \"%s\" to all objects.", p_event->getType().c_str());
+    log_manager.writeLog(LOG_EVENT, "av::Manager::onEvent(): Sending event \"%s\" to all objects.", p_event->getType().c_str());
 
     av::GameManager &game_manager = av::GameManager::getInstance();
     game_manager.handleGlobalEvent(p_event);
@@ -74,7 +74,6 @@ int av::Manager::registerInterest(av::Object *p_o, std::string event_type) {
 
     if (!this->isValid(event_type)) {
         log_manager.writeLog(
-            1, 
             "av::Manager::registerInterest(): Object of type %s registering for event type %s is invalid for manager %s",
             p_o->getType().c_str(),
             event_type.c_str(),
@@ -85,7 +84,7 @@ int av::Manager::registerInterest(av::Object *p_o, std::string event_type) {
     }
 
     log_manager.writeLog(
-        1, 
+        LOG_EVENT,
         "av::Manager::registerInterest(): Registering object of type %s with manager %s for event type %s",
         p_o->getType().c_str(),
         this->getType().c_str(),

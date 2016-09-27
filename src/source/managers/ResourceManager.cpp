@@ -28,7 +28,7 @@ int av::ResourceManager::startUp() {
         this->setType("RESOURCE_MANAGER");
         
         av::LogManager &log_manager = av::LogManager::getInstance();
-        log_manager.writeLog(2, "av::ResourceManager::startUp(): Starting ResourceManager");
+        log_manager.writeLog(LOG_STARTUP, "av::ResourceManager::startUp(): Starting ResourceManager");
 
         return 0;
     }
@@ -40,7 +40,7 @@ void av::ResourceManager::shutDown() {
         // Frees all sprites
         
         av::LogManager &log_manager = av::LogManager::getInstance();
-        log_manager.writeLog(2, "av::ResourceManager::shutDown(): Closing ResourceManager");
+        log_manager.writeLog(LOG_STARTUP, "av::ResourceManager::shutDown(): Closing ResourceManager");
 
         av::Manager::shutDown();
     }
@@ -49,7 +49,7 @@ void av::ResourceManager::shutDown() {
 int av::ResourceManager::loadSprite(std::string filename, std::string label) {
     av::LogManager &log_manager = av::LogManager::getInstance();
     log_manager.writeLog(
-        2, 
+        LOG_RESOURCE, 
         "av::ResourceManager::loadSprite(): Loading sprite from file '%s' into label '%s'", 
         filename.c_str(), 
         label.c_str()
@@ -69,7 +69,6 @@ int av::ResourceManager::loadSprite(std::string filename, std::string label) {
             getline(spritefile, line);
             if (line.compare(av::END_SPRITE_TOKEN) != 0) {
                 log_manager.writeLog(
-                    2, 
                     "av::loadSprite(): Error incorrect END_SPRITE_TOKEN, expected '%s' found '%s' in file '%s'", 
                     av::END_SPRITE_TOKEN.c_str(), 
                     line.c_str(),
@@ -78,7 +77,6 @@ int av::ResourceManager::loadSprite(std::string filename, std::string label) {
             }
         } else {
             log_manager.writeLog(
-                2, 
                 "av::loadSprite(): Error END_SPRITE_TOKEN '%s' not found in file '%s'", 
                 av::END_SPRITE_TOKEN.c_str(),
                 filename.c_str()
@@ -90,7 +88,6 @@ int av::ResourceManager::loadSprite(std::string filename, std::string label) {
         return 0;
     } else { // unable to open file
         log_manager.writeLog(
-            2, 
             "av::ResourceManager::loadSprite(): Error opening file '%s'", 
             filename.c_str()
             );
@@ -99,7 +96,7 @@ int av::ResourceManager::loadSprite(std::string filename, std::string label) {
 }
 
 int av::ResourceManager::unloadSprite(std::string label) {
-    int i = 0;
+    // TODO: Write this function?
     return -1;
 }
 
@@ -112,7 +109,8 @@ int av::extractTagInt(std::ifstream *p_file, const char *tag) {
         return atoi(line.substr(strlen(tag)+1).c_str());
     } else {
         av::LogManager &log_manager = av::LogManager::getInstance();
-        log_manager.writeLog(2, "av::extractTagInt(): Error expected tag '%s' on line '%s'", 
+        log_manager.writeLog(
+            "av::extractTagInt(): Error expected tag '%s' on line '%s'", 
             tag,
             line.c_str());
         return -1;
@@ -128,7 +126,8 @@ std::string av::extractTagString(std::ifstream *p_file, const char *tag) {
         return line.substr(strlen(tag)+1).c_str();
     } else {
         av::LogManager &log_manager = av::LogManager::getInstance();
-        log_manager.writeLog(2, "av::extractTagString(): Error expected tag '%s' on line '%s'", 
+        log_manager.writeLog(
+            "av::extractTagString(): Error expected tag '%s' on line '%s'", 
             tag,
             line.c_str());
         return "";
@@ -138,7 +137,7 @@ std::string av::extractTagString(std::ifstream *p_file, const char *tag) {
 int av::ResourceManager::loadSound(std::string filename, std::string label) {
     av::LogManager &log_manager = av::LogManager::getInstance();
     log_manager.writeLog(
-        2, 
+        LOG_RESOURCE, 
         "av::ResourceManager::loadSound(): Loading sound from file '%s' into label '%s'", 
         filename.c_str(), 
         label.c_str()
@@ -146,7 +145,6 @@ int av::ResourceManager::loadSound(std::string filename, std::string label) {
 
     if (this->sound_count >= av::MAX_SOUNDS) {
         log_manager.writeLog(
-            2, 
             "av::ResourceManager::loadSound(): Sound limit reached, sound '%s' not loaded", 
             label.c_str()
             );
@@ -175,7 +173,7 @@ int av::ResourceManager::unloadSound(std::string label) {
             this->sound_count--;
             av::LogManager &log_manager = av::LogManager::getInstance();
             log_manager.writeLog(
-                2, 
+                LOG_RESOURCE,
                 "av::ResourceManager::unloadSound(): Sound with label '%s' unloaded", 
                 label.c_str()
                 );
@@ -193,14 +191,14 @@ av::Sound *av::ResourceManager::getSound(std::string label) const {
         }
     }
     av::LogManager &log_manager = av::LogManager::getInstance();
-    log_manager.writeLog(2, "av::ResourceManager::getSound(): Sound with label '%s' not found", label.c_str());
+    log_manager.writeLog("av::ResourceManager::getSound(): Sound with label '%s' not found", label.c_str());
     return NULL;
 }
 
 int av::ResourceManager::loadMusic(std::string filename, std::string label) {
     av::LogManager &log_manager = av::LogManager::getInstance();
     log_manager.writeLog(
-        2, 
+        LOG_RESOURCE, 
         "av::ResourceManager::loadMusic(): Loading music from file '%s' into label '%s'", 
         filename.c_str(), 
         label.c_str()
@@ -208,7 +206,6 @@ int av::ResourceManager::loadMusic(std::string filename, std::string label) {
 
     if (this->music_count >= av::MAX_MUSIC) {
         log_manager.writeLog(
-            2, 
             "av::ResourceManager::loadMusic(): Music limit reached, music '%s' not loaded", 
             label.c_str()
             );
@@ -234,7 +231,7 @@ int av::ResourceManager::unloadMusic(std::string label) {
             this->p_music[i]->setLabel("");
             av::LogManager &log_manager = av::LogManager::getInstance();
             log_manager.writeLog(
-                2, 
+                LOG_RESOURCE, 
                 "av::ResourceManager::unloadMusic(): Music with label '%s' unloaded", 
                 label.c_str()
                 );
@@ -252,6 +249,6 @@ av::Music *av::ResourceManager::getMusic(std::string label) const {
         }
     }
     av::LogManager &log_manager = av::LogManager::getInstance();
-    log_manager.writeLog(2, "av::ResourceManager::getMusic(): Music with label '%s' not found", label.c_str());
+    log_manager.writeLog("av::ResourceManager::getMusic(): Music with label '%s' not found", label.c_str());
     return NULL;
 }

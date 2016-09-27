@@ -91,7 +91,10 @@ namespace av {
         void setGlobalEventHandler(std::function<void(const Event *)> new_global_event_handler);
 
         // Handles global events
-        void handleGlobalEvent(const av::Event *p_event);
+        void handleGlobalEvent(const Event *p_event);
+
+        // Default handler (does nothing)
+        static void defaultGlobalEventHandler(const Event *p_event);
     };
 } // End of namespace
 

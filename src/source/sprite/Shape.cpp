@@ -27,7 +27,7 @@ av::Shape::Shape() {
     GLint vShaderCompiled = GL_FALSE;
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vShaderCompiled);
     if (vShaderCompiled != GL_TRUE) {
-        log_manager.writeLog(4, "av::GraphicsManager::startUp(): Unable to compile vertex shader. %d\n", vertexShader);
+        log_manager.writeLog("av::Shape::Shape(): Unable to compile vertex shader. %d\n", vertexShader);
         // printShaderLog(vertexShader);
         return;
     }
@@ -52,7 +52,7 @@ av::Shape::Shape() {
     GLint fShaderCompiled = GL_FALSE;
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fShaderCompiled);
     if (fShaderCompiled != GL_TRUE) {
-        log_manager.writeLog(4, "av::GraphicsManager::startUp(): Unable to compile fragment shader. %d\n", fragmentShader);
+        log_manager.writeLog("av::Shape::Shape(): Unable to compile fragment shader. %d\n", fragmentShader);
         // printShaderLog(vertexShader);
         return;
     }
@@ -68,7 +68,7 @@ av::Shape::Shape() {
     GLint programSuccess = GL_TRUE;
     glGetProgramiv(this->programId, GL_LINK_STATUS, &programSuccess);
     if (programSuccess != GL_TRUE) {
-        log_manager.writeLog(4, "av::GraphicsManager::startUp(): Unable to link program. %d\n", this->programId);
+        log_manager.writeLog("av::Shape::Shape(): Unable to link program. %d\n", this->programId);
         // printProgramLog(gProgramID);
         return;
     }
@@ -78,7 +78,7 @@ av::Shape::Shape() {
     std::string glslProgramVar = "LVertexPos2D";
     this->vertexAttribLoc = glGetAttribLocation(this->programId, glslProgramVar.c_str());
     if (this->vertexAttribLoc == -1) {
-        log_manager.writeLog(4, "av::GraphicsManager::startUp(): %s is not a valid glsl program variable\n", glslProgramVar.c_str());
+        log_manager.writeLog("av::Shape::Shape(): %s is not a valid glsl program variable\n", glslProgramVar.c_str());
         return;
     }
 
